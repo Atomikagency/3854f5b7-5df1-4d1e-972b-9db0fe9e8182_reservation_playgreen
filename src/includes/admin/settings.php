@@ -32,10 +32,18 @@ function rp_render_settings_page() {
         $stripe_public = sanitize_text_field($_POST['rp_stripe_public']);
         $stripe_private = sanitize_text_field($_POST['rp_stripe_private']);
 
+        // Sauvegarder les pages
+        $reservation_form_page = intval($_POST['rp_reservation_form_page']);
+        $recap_page = intval($_POST['rp_recap_page']);
+        $thank_you_page = intval($_POST['rp_thank_you_page']);
+
         // Sauvegarder les options
         update_option('rp_commission', $commission);
         update_option('rp_stripe_public', $stripe_public);
         update_option('rp_stripe_private', $stripe_private);
+        update_option('rp_reservation_form_page', $reservation_form_page);
+        update_option('rp_recap_page', $recap_page);
+        update_option('rp_thank_you_page', $thank_you_page);
 
         // Afficher un message de succès
         echo '<div class="updated"><p>Réglages sauvegardés avec succès.</p></div>';
@@ -45,11 +53,17 @@ function rp_render_settings_page() {
     $commission = get_option('rp_commission', 0);
     $stripe_public = get_option('rp_stripe_public', '');
     $stripe_private = get_option('rp_stripe_private', '');
+    $reservation_form_page = get_option('rp_reservation_form_page', 0);
+    $recap_page = get_option('rp_recap_page', 0);
+    $thank_you_page = get_option('rp_thank_you_page', 0);
+
+    // Récupérer toutes les pages disponibles
+    $pages = get_pages();
 
     ?>
 
     <div class="wrap">
-        <h1>Réglages </h1>
+        <h1>Réglages</h1>
         <form method="post">
             <?php wp_nonce_field('rp_save_settings_nonce', 'rp_settings_nonce'); ?>
 
@@ -76,6 +90,51 @@ function rp_render_settings_page() {
                     </th>
                     <td>
                         <input type="password" id="rp_stripe_private" name="rp_stripe_private" value="<?php echo esc_attr($stripe_private); ?>" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="rp_reservation_form_page">Formulaire de réservation</label>
+                    </th>
+                    <td>
+                        <select id="rp_reservation_form_page" name="rp_reservation_form_page" style="width: 100%;">
+                            <option value="0">-- Sélectionner une page --</option>
+                            <?php foreach ($pages as $page) : ?>
+                                <option value="<?php echo $page->ID; ?>" <?php selected($reservation_form_page, $page->ID); ?>>
+                                    <?php echo esc_html($page->post_title); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="rp_recap_page">Page de récapitulatif</label>
+                    </th>
+                    <td>
+                        <select id="rp_recap_page" name="rp_recap_page" style="width: 100%;">
+                            <option value="0">-- Sélectionner une page --</option>
+                            <?php foreach ($pages as $page) : ?>
+                                <option value="<?php echo $page->ID; ?>" <?php selected($recap_page, $page->ID); ?>>
+                                    <?php echo esc_html($page->post_title); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <label for="rp_thank_you_page">Page de félicitations</label>
+                    </th>
+                    <td>
+                        <select id="rp_thank_you_page" name="rp_thank_you_page" style="width: 100%;">
+                            <option value="0">-- Sélectionner une page --</option>
+                            <?php foreach ($pages as $page) : ?>
+                                <option value="<?php echo $page->ID; ?>" <?php selected($thank_you_page, $page->ID); ?>>
+                                    <?php echo esc_html($page->post_title); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </td>
                 </tr>
             </table>

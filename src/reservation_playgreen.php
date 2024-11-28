@@ -15,6 +15,8 @@ if (!defined('ABSPATH')) {
     exit; // Prevent direct access
 }
 
+require_once 'vendor/autoload.php';
+
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR . 'update-checker.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/category.shortcode.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/latest_article.shortcode.php';
@@ -22,6 +24,11 @@ require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gift_card.shortcode.php
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/code_promo.cpt.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/admin/settings.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/activity.cpt.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/reservation.cpt.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/reservation_flow/form.shortcode.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/reservation_flow/recapitulation.shortcode.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/reservation_flow/stripe.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/admin/stripe_connect.php';
 
 
 
@@ -35,6 +42,28 @@ function rp_enqueue_styles()
 function rp_enqueue_scripts()
 {
     wp_enqueue_script('rp-script', RESERVATION_PLAYGREEN_PLUGIN_URL . 'assets/js/script.js', [],'1.0.0', true);
+    $reservation_form_page_id = get_option('rp_reservation_form_page');
+    if (is_page($reservation_form_page_id)) {
+        // Ajouter Flatpickr CSS et JS
+        wp_enqueue_style('flatpickr-css', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css', [], '4.6.13');
+        wp_enqueue_script('flatpickr-js', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js', [], '4.6.13', true);
+
+        // Ajouter le script personnalisé pour le formulaire
+        wp_enqueue_script(
+            'reservation-form-js',
+            plugin_dir_url(__FILE__) . 'assets/js/reservation-form.js',
+            ['jquery', 'flatpickr-js'],
+            '1.0.0',
+            true
+        );
+
+        // Passer des données PHP vers le JS
+        wp_localize_script('reservation-form-js', 'rpReservationData', [
+            'prixAdulte'     => intval(get_post_meta($_GET['activite_id'], '_rp_prix_adulte', true)),
+            'prixEnfant'     => intval(get_post_meta($_GET['activite_id'], '_rp_prix_enfant', true)),
+            'availableDates' => get_post_meta($_GET['activite_id'], '_rp_hours', true), // Assurez-vous que ces données soient dans un format exploitable
+        ]);
+    }
 }
 
 add_action('wp_enqueue_scripts', 'rp_enqueue_styles');
