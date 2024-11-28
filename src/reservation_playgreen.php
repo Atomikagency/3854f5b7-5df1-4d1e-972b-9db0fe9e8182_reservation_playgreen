@@ -19,6 +19,10 @@ require_once RESERVATION_PLAYGREEN_PLUGIN_DIR . 'update-checker.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/category.shortcode.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/latest_article.shortcode.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gift_card.shortcode.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/code_promo.cpt.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/admin/settings.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/activity.cpt.php';
+
 
 
 // add asset style
@@ -48,3 +52,14 @@ function rp_et_project_posttype_args($args)
         'show_ui' => false
     ));
 }
+
+// Charger les scripts nécessaires pour le Media Uploader
+function rp_enqueue_admin_scripts($hook_suffix) {
+    // Vérifier que nous sommes bien dans l'édition d'un "activite"
+    global $post_type;
+    if ($post_type === 'activite') {
+        wp_enqueue_media();
+        wp_enqueue_script('rp-media-upload', plugin_dir_url(__FILE__) . 'assets/js/media-upload.js', array('jquery'), '1.0', true);
+    }
+}
+add_action('admin_enqueue_scripts', 'rp_enqueue_admin_scripts');
