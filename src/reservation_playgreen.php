@@ -16,3 +16,4 @@ if (!defined('ABSPATH')) {
 }
 
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR . 'update-checker.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR . 'admin.php';
