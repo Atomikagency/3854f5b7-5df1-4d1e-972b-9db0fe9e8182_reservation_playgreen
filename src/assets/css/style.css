@@ -1,0 +1,100 @@
+/* Variables */
+:root {
+    --gray-color: #bcbcbc;
+    --input-border-color: var(--gray-color);
+    --primary-gradient: linear-gradient(to right, #05703d, #1dbd71);
+    --primary-gradient-hover: linear-gradient(to left, #05703d, #1dbd71);
+}
+
+/* Reservation Button */
+.reservation-button {
+    position: relative;
+    border-width: 0px !important;
+    border-radius: 100vmax;
+    font-size: 17px;
+    color: #ffffff !important;
+    padding: 7px 17px;
+    background: transparent;
+    overflow: hidden;
+}
+
+.reservation-button::after,
+.reservation-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0;
+    background: var(--primary-gradient-hover);
+    transition: opacity 0.5s ease;
+}
+
+.reservation-button::after {
+    background: var(--primary-gradient);
+    opacity: 1;
+}
+
+.reservation-button:hover::after {
+    opacity: 0;
+}
+.reservation-button:hover::before {
+    opacity: 1;
+}
+
+/* Reservation form */
+
+@media screen and (max-width: 800px) {
+    .reservation-form-container {
+        flex-direction: column-reverse;
+        align-items: stretch !important;
+    }
+}
+
+.reservation-form-container .reservation-form-left #reservation-form label {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.reservation-form-container .reservation-form-left #reservation-form input,
+.reservation-form-container .reservation-form-left #reservation-form select {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 4px;
+}
+
+.reservation-form-container .reservation-form-left #reservation-form button[type="submit"] {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.reservation-form-container .reservation-form-right .reservation-form-price {
+    margin-top: 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.reservation-form-container .reservation-form-right .reservation-form-price .reservation-form-price-total {
+    font-size: 2em;
+    font-weight: 600;
+    background: var(--primary-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.reservation-form-container .reservation-form-right .reservation-form-price .reservation-form-price-without-discount {
+    font-size: 1.5em;
+    color: var(--gray-color);
+    text-decoration: line-through;
+}
+
+.reservation-form-container .reservation-form-right h3 {
+    font-size: 20px;
+    margin-top: 20px;
+}
