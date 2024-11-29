@@ -54,7 +54,7 @@
 
             <!-- Soumettre -->
             <button type="submit" class="button reservation-button" name="form_reservation_submit" style="padding: 12px 35px; width: 100%;">Réserver</button>
-            <p style="margin-top: 20px; color: #000; font-weight: 500;">* Enfants de 3 à 17 ans - Gratuit pour les moins de 3 ans</p>
+            <p style="margin-top: 20px; color: #000; font-weight: 500;">1: Enfants de 3 à 17 ans - Gratuit pour les moins de 3 ans</p>
         </form>
     </div>
 
