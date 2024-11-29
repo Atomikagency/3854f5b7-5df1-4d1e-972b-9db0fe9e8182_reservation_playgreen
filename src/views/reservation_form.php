@@ -63,9 +63,9 @@
         <img src="<?php echo esc_url($activity_meta['thumbnail']); ?>" alt="<?php echo esc_html(get_the_title($activite_id)); ?>" style="width: 100%; border-radius: 20px;">
         <h3><?php echo esc_html(get_the_title($activite_id)); ?></h3>
         <?php
-        $duration = explode('.', $activity_meta['duree']);
-        $hours = $duration[0];
-        $minutes = $duration[1] ?? 0;
+            $duration = explode('.', $activity_meta['duree']);
+            $hours = $duration[0];
+            $minutes = $duration[1] ?? 0;
         ?>
         <p><strong>Durée :</strong> <?php echo esc_html($hours) . "h"; ?><?php if($minutes > 0) { echo esc_html($minutes) . "m"; } ?></p>
         <p><strong>Note :</strong> <?php echo esc_html($activity_meta['note']); ?>/5</p>

@@ -19,6 +19,7 @@ function rp_reservation_recap_shortcode($atts) {
                 'enfants'   => get_post_meta($reservation_id, '_rp_nb_enfants', true),
                 'activite' => intval(get_post_meta($reservation_id, '_rp_activite_id', true)),
                 'activite_data' => get_post(intval(get_post_meta($reservation_id, '_rp_activite_id', true)),'activite'),
+                'activite_duration' => get_post_meta(get_post_meta($reservation_id, '_rp_activite_id', true), '_rp_duree', true),
                 'activite_thumbnail' => get_the_post_thumbnail_url(intval(get_post_meta($reservation_id, '_rp_activite_id', true)))
             ];
 
