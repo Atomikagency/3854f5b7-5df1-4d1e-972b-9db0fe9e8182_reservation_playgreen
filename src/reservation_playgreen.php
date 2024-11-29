@@ -43,7 +43,7 @@ function rp_enqueue_scripts()
 {
     wp_enqueue_script('rp-script', RESERVATION_PLAYGREEN_PLUGIN_URL . 'assets/js/script.js', [],'1.0.0', true);
     $reservation_form_page_id = get_option('rp_reservation_form_page');
-    if (is_page($reservation_form_page_id)) {
+    if (!empty($reservation_form_page_id) && is_page($reservation_form_page_id)) {
         // Ajouter Flatpickr CSS et JS
         wp_enqueue_style('flatpickr-css', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css', [], '4.6.13');
         wp_enqueue_script('flatpickr-js', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js', [], '4.6.13', true);
