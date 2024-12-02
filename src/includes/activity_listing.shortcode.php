@@ -28,8 +28,8 @@ function rp_activity_listing_shortcode($atts) {
         $query->the_post();
 
         // Récupération des métadonnées
-        $prix_adulte = get_post_meta(get_the_ID(), 'prix_adulte', true);
-        $prix_enfant = get_post_meta(get_the_ID(), 'prix_enfant', true);
+        $prix_adulte = get_post_meta(get_the_ID(), '_rp_prix_adulte', true);
+        $prix_enfant = get_post_meta(get_the_ID(), '_rp_prix_enfant', true);
         $prix_min = min(array_filter([$prix_adulte, $prix_enfant]));
 
         $lieu = get_post_meta(get_the_ID(), '_rp_lieu', true);
