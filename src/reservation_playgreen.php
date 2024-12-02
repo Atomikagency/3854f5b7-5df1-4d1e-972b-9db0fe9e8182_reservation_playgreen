@@ -29,6 +29,7 @@ require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/reservation_flow/form.s
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/reservation_flow/recapitulation.shortcode.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/reservation_flow/stripe.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/admin/stripe_connect.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/price.ajax.php';
 
 
 
@@ -42,7 +43,13 @@ function rp_enqueue_styles()
 function rp_enqueue_scripts()
 {
     wp_enqueue_script('rp-script', RESERVATION_PLAYGREEN_PLUGIN_URL . 'assets/js/script.js', [],'1.0.0', true);
+
+    wp_localize_script('rp-script', 'ajax_object', [
+        'ajaxurl' => admin_url('admin-ajax.php'),
+    ]);
+
     $reservation_form_page_id = get_option('rp_reservation_form_page');
+
     if (!empty($reservation_form_page_id) && is_page($reservation_form_page_id)) {
         // Ajouter Flatpickr CSS et JS
         wp_enqueue_style('flatpickr-css', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css', [], '4.6.13');
