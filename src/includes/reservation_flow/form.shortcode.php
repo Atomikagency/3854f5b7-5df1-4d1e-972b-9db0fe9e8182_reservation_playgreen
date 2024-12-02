@@ -30,14 +30,13 @@ add_shortcode('reservation_button', 'rp_reservation_button_shortcode');
 function rp_reservation_form_shortcode() {
     // Récupérer l'ID de l'activité depuis l'URL
     $activite_id = isset($_GET['activite_id']) ? intval($_GET['activite_id']) : null;
-
     // Vérifier que l'ID de l'activité est valide
     if (!$activite_id || get_post_type($activite_id) !== 'activite') {
         return '<p style="color: red;">Activité non valide ou manquante.</p>';
     }
 
     // Gérer la soumission du formulaire
-    if (isset($_POST['form_reservation_submit'])) {
+    if (isset($_POST['reservation_adultes'])) {
         // Vérification nonce
         check_admin_referer('reservation_form_nonce', 'reservation_form_nonce_field');
 

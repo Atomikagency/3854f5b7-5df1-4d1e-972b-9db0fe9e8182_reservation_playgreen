@@ -18,6 +18,9 @@ function rp_reservation_recap_shortcode($atts) {
                 'adultes'   => get_post_meta($reservation_id, '_rp_nb_adultes', true),
                 'enfants'   => get_post_meta($reservation_id, '_rp_nb_enfants', true),
                 'activite' => intval(get_post_meta($reservation_id, '_rp_activite_id', true)),
+                'activite_data' => get_post(intval(get_post_meta($reservation_id, '_rp_activite_id', true)),'activite'),
+                'activite_duration' => get_post_meta(get_post_meta($reservation_id, '_rp_activite_id', true), '_rp_duree', true),
+                'activite_thumbnail' => get_the_post_thumbnail_url(intval(get_post_meta($reservation_id, '_rp_activite_id', true)))
             ];
 
             $prix_adulte = floatval(get_post_meta($reservation_data['activite'], '_rp_prix_adulte', true));
@@ -26,6 +29,7 @@ function rp_reservation_recap_shortcode($atts) {
             // Calculer le total
             // apply code promo if exist
             $total = ($reservation_data['adultes'] * $prix_adulte) + ($reservation_data['enfants'] * $prix_enfant);
+            $totalBeforeDiscount = $total;
             $promo_code = get_post_meta($reservation_id, '_rp_code_promo', true); // Champ personnalisé dans la réservation
             if (!empty($promo_code)) {
                 // Rechercher le code promo dans le CPT
@@ -46,6 +50,7 @@ function rp_reservation_recap_shortcode($atts) {
             $total = max($total, 0);
 
             $reservation_data['total'] = $total;
+            $reservation_data['totalBeforeDiscount'] = $totalBeforeDiscount;
 
             ob_start();
             $view_file = RESERVATION_PLAYGREEN_PLUGIN_DIR . 'views/recapitulation.php';
