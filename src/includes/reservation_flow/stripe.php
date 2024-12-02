@@ -199,6 +199,7 @@ function rp_handle_payment_processing()
                 if ($reservation_id && get_post_type($reservation_id) === 'reservation') {
                     update_post_meta($reservation_id, '_rp_state', 'done'); // Passer en "terminé"
                     update_post_meta($reservation_id, '_rp_stripe_charge_id', $payment_intent_id);
+                    update_post_meta($reservation_id, '_rp_is_paid', 1);
 
                     $reservation_data = [
                         'id' => $reservation_id,

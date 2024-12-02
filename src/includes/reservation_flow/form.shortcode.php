@@ -98,7 +98,7 @@ function rp_reservation_form_shortcode() {
         'prix_adulte'  => get_post_meta($activite_id, '_rp_prix_adulte', true),
         'prix_enfant'  => get_post_meta($activite_id, '_rp_prix_enfant', true),
         'horaire'      => get_post_meta($activite_id, '_rp_hours', true),
-        'thumbnail'    => get_the_post_thumbnail_url($activite_id, 'medium'),
+        'thumbnail'    => get_the_post_thumbnail_url($activite_id, 'full'),
         'duree'        => get_post_meta($activite_id, '_rp_duree', true),
         'note'         => get_post_meta($activite_id, '_rp_note', true),
         'resumé'       => get_the_excerpt($activite_id),
