@@ -12,7 +12,7 @@ function rp_reservation_metadata_shortcode($attrs)
         $attrs);
 
     if (empty($attrs['field'])) {
-        return $_GET['reservation_id'];
+        return esc_html($_GET['reservation_id']);
     }
     $meta_value = get_post_meta($reservation_id, $attrs['field'], true);
     if (!empty($meta_value)) {
