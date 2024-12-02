@@ -1,18 +1,6 @@
 <?php
 
 add_shortcode('rp_activity_metadata', 'rp_activity_metadata_shortcode');
-/**
- * Create shortcode to display :
- * - _rp_note
- * - _rp_lieu
- * - _rp_nb_personne
- * - _rp_duree
- * - _rp_langue_fr
- * - _rp_langue_en
- *
- * // return template views/activity_metadata.php using ob_start()
- */
-
 function rp_activity_metadata_shortcode($atts) {
     // Fetch metadata
     global $post;
