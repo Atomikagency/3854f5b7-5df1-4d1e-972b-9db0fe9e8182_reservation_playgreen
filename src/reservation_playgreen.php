@@ -31,6 +31,7 @@ require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/reservation_flow/stripe
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/admin/stripe_connect.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/price.ajax.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/activity_metadata.shortcode.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/reservation_flow/reservation_meta.shortcode.php';
 
 
 
