@@ -251,12 +251,21 @@ function rp_handle_payment_processing()
     - Nombre d'enfants : {$reservation_data['enfants']}
     - Langue : {$reservation_data['langue']}
     - Total : {$total}
+    
+    Vous pouvez télécharger votre facture ici : <a href='{$session->invoice_pdf}'>Télécharger la facture</a>
 
     Nous avons hâte de vous accueillir !
 
     Cordialement,
     L’équipe de Playgreen
 ";
+
+
+
+
+
+
+
 
                     wp_mail($reservation_data['email'], $subject_client, $message_client);
                     $admin_email = get_option('admin_email'); // Email de l'administrateur WordPress

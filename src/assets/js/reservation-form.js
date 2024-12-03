@@ -50,7 +50,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const prixAdulte = parseInt(rpReservationData.prixAdulte) || 0;
     const prixEnfant = parseInt(rpReservationData.prixEnfant) || 0;
     const availableDates = rpReservationData.availableDates;
-
+    const unavailabilityDates = rpReservationData.unavailabilityDates || [];
+    console.log(unavailabilityDates)
     // Mapper les jours de la semaine en index (0 = Dimanche, 1 = Lundi, ...)
     const dayMapping = {
         Dimanche: 0,
@@ -65,14 +66,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // Filtrer les dates disponibles pour Flatpickr
     const enabledDates = [];
     const today = new Date();
-    for (let i = 0; i < 30; i++) {
-        // Vérifier les 30 prochains jours
+    const daysToCheck = 365; // Vérifier les 365 prochains jours
+    for (let i = 0; i < daysToCheck; i++) {
         const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + i);
         const dayOfWeek = currentDate.getDay(); // Obtenir l'index du jour
         const dayName = Object.keys(dayMapping).find((key) => dayMapping[key] === dayOfWeek);
+        const currentDateStr = flatpickr.formatDate(currentDate, "Y-m-d");
 
-        if (availableDates[dayName]) {
-            enabledDates.push(flatpickr.formatDate(currentDate, "Y-m-d"));
+        // Vérifier si la date est dans les dates d'indisponibilité
+        const isUnavailable = unavailabilityDates.some(dateRange => {
+            const startDate = new Date(dateRange.start);
+            const endDate = dateRange.end && dateRange.end !== '' ? new Date(dateRange.end) : startDate;
+            return currentDateStr === flatpickr.formatDate(startDate, "Y-m-d") || (currentDate >= startDate && currentDate <= endDate);
+        });
+
+        console.log(isUnavailable)
+        if (availableDates[dayName] && !isUnavailable) {
+            enabledDates.push(currentDateStr);
         }
     }
 

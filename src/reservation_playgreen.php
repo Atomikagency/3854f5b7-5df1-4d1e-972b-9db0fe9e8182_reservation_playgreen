@@ -72,7 +72,8 @@ function rp_enqueue_scripts()
         wp_localize_script('reservation-form-js', 'rpReservationData', [
             'prixAdulte'     => intval(get_post_meta($_GET['activite_id'], '_rp_prix_adulte', true)),
             'prixEnfant'     => intval(get_post_meta($_GET['activite_id'], '_rp_prix_enfant', true)),
-            'availableDates' => get_post_meta($_GET['activite_id'], '_rp_hours', true), // Assurez-vous que ces données soient dans un format exploitable
+            'availableDates' => get_post_meta($_GET['activite_id'], '_rp_hours', true),
+            'unavailabilityDates' => get_post_meta($_GET['activite_id'], '_rp_unavailability_dates', true),
         ]);
     }
 }

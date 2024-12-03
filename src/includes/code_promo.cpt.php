@@ -9,7 +9,7 @@ function rp_register_promo_code_cpt() {
         'publicly_queryable'    => false,
         'show_ui'               => true,
         'show_in_rest'          => false,
-        'supports'              => array('title','editor', 'thumbnail'),
+        'supports'              => array('title'),
         'capability_type'       => 'post',
         'menu_icon'             => 'dashicons-tickets',
         'rewrite'               => false,
