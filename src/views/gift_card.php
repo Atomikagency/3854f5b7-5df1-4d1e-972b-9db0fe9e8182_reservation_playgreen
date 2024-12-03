@@ -3,20 +3,20 @@
     <p class="gift_card_section_title">Choisissez votre thème :</p>
     <div class="themes_container">
         <label>
-            <input type="radio" name="theme" value="1" required>
-            <img src="theme1.jpg" alt="Thème 1">
+            <input type="radio" name="theme" value="1">
+            <img src="/wp-content/uploads/2024/12/Theme-1.png" alt="Thème 1">
         </label>
         <label>
             <input type="radio" name="theme" value="2">
-            <img src="theme2.jpg" alt="Thème 2">
+            <img src="/wp-content/uploads/2024/12/Theme-2.png" alt="Thème 2">
         </label>
         <label>
             <input type="radio" name="theme" value="3">
-            <img src="theme3.jpg" alt="Thème 3">
+            <img src="/wp-content/uploads/2024/12/Theme-3.png" alt="Thème 3">
         </label>
         <label>
             <input type="radio" name="theme" value="4">
-            <img src="theme4.jpg" alt="Thème 4">
+            <img src="/wp-content/uploads/2024/12/Theme-4.png" alt="Thème 4">
         </label>
     </div>
 
@@ -48,37 +48,44 @@
     <div class="message_container">
         <p class="gift_card_section_title">Souhaitez-vous écrire un message ?</p>
         <label>
-            <input type="checkbox" name="add_message" checked> Oui
+            <input type="checkbox" name="add_message" checked>
+            <span>Oui</span>
+            <span>Non</span>
         </label>
         <textarea name="message" placeholder="Votre message"></textarea>
     </div>
 
     <!-- Email -->
     <div class="email_container">
-        <label class="gift_card_section_title">
-            Renseignez votre adresse email
-            <input type="email" name="email" required>
+        <p class="gift_card_section_title">Renseignez votre adresse email</p>
+        <label>
+            <input type="email" name="email" placeholder="dupont.jean@mail.com">
         </label>
     </div>
 
     <!-- Envoi direct -->
     <div class="envoie_direct_container">
-        <p class="gift_card_section_title">Souhaitez-vous directement envoyer la carte par mail ? (Vous recevrez aussi la carte par mail)</p>
+        <p class="gift_card_section_title">Souhaitez-vous directement envoyer la carte par mail ?</p>
+        <p>(Vous recevrez aussi la carte par mail)</p><br/>
         <label>
-            <input type="checkbox" name="send_direct"> Oui
+            <input type="checkbox" name="send_direct" checked>
+            <span>Oui</span>
+            <span>Non</span>
         </label>
-        <input type="email" name="emailSend" placeholder="Email du destinataire" style="display: none;">
+        <input type="email" name="emailSend" placeholder="Email du destinataire">
     </div>
 
     <!-- RGPD -->
     <div class="rgpd_container">
         <label>
-            <input type="checkbox" name="rgpd" required>
+            <input type="checkbox" name="rgpd">
             J'accepte que mes données personnelles saisies dans ce formulaire soient utilisées dans le cadre d'une prise de contact.
         </label>
     </div>
 
     <input type="hidden" name="gift_card_form_submit" value="1">
+
+    <div id="gift-card-error" style="color: red; margin-top: 10px;"></div>
 
     <button type="submit" class="reservation-button" style="padding: 12px 40px; font-weight: 700;">Terminer</button>
 </form>

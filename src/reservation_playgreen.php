@@ -52,13 +52,17 @@ function rp_enqueue_scripts()
     ]);
 
     $reservation_form_page_id = get_option('rp_reservation_form_page');
+    $gift_card_page_id = get_option('rp_gift_card_page');
+
+    if(is_page($reservation_form_page_id) || is_page($gift_card_page_id)) {
+        // Ajouter Fastest Validator
+        wp_enqueue_script('fastest-validator', 'https://unpkg.com/fastest-validator', [], '1.0.0', true);
+    }
 
     if (!empty($reservation_form_page_id) && is_page($reservation_form_page_id)) {
         // Ajouter Flatpickr CSS et JS
         wp_enqueue_style('flatpickr-css', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css', [], '4.6.13');
         wp_enqueue_script('flatpickr-js', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js', [], '4.6.13', true);
-        // Ajouter Fastest Validator
-        wp_enqueue_script('fastest-validator', 'https://unpkg.com/fastest-validator', [], '1.0.0', true);
         // Ajouter le script personnalisé pour le formulaire
         wp_enqueue_script(
             'reservation-form-js',
