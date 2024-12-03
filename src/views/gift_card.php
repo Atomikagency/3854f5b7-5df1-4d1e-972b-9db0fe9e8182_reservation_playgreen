@@ -1,6 +1,6 @@
-<form id="gift_card" method="post">
+<form id="gift_card" method="post" class="gift_card_form">
     <!-- Thèmes -->
-    <p>Choisissez votre thème :</p>
+    <p class="gift_card_section_title">Choisissez votre thème :</p>
     <div class="themes_container">
         <label>
             <input type="radio" name="theme" value="1" required>
@@ -22,7 +22,7 @@
 
     <!-- Montant -->
     <div class="montant_container">
-        <p>Choisissez un montant :</p>
+        <p class="gift_card_section_title">Choisissez un montant :</p>
         <label>
             <input type="radio" name="preset_amount" value="50"> 50 €
         </label>
@@ -39,15 +39,14 @@
             <input type="radio" name="preset_amount" value="500"> 500 €
         </label>
         <label>
-            Autre montant :
-            <input type="number" name="custom_amount" min="1" step="1" placeholder="Montant">
+            <input type="number" name="custom_amount" min="1" step="1" placeholder="Montant">€ 
         </label>
         <input type="hidden" name="montant" value="">
     </div>
 
     <!-- Message -->
     <div class="message_container">
-        <p>Souhaitez-vous écrire un message ?</p>
+        <p class="gift_card_section_title">Souhaitez-vous écrire un message ?</p>
         <label>
             <input type="checkbox" name="add_message" checked> Oui
         </label>
@@ -56,15 +55,15 @@
 
     <!-- Email -->
     <div class="email_container">
-        <label>
-            Votre email :
+        <label class="gift_card_section_title">
+            Renseignez votre adresse email
             <input type="email" name="email" required>
         </label>
     </div>
 
     <!-- Envoi direct -->
     <div class="envoie_direct_container">
-        <p>Souhaitez-vous directement envoyer la carte par mail ? (Vous recevrez aussi la carte par mail)</p>
+        <p class="gift_card_section_title">Souhaitez-vous directement envoyer la carte par mail ? (Vous recevrez aussi la carte par mail)</p>
         <label>
             <input type="checkbox" name="send_direct"> Oui
         </label>
@@ -79,6 +78,8 @@
         </label>
     </div>
 
-    <input type="submit" name="gift_card_form_submit" value="Terminer">
+    <input type="hidden" name="gift_card_form_submit" value="1">
+
+    <button type="submit" class="reservation-button" style="padding: 12px 40px; font-weight: 700;">Terminer</button>
 </form>
 

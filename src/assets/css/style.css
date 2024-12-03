@@ -8,6 +8,7 @@
 
 /* Reservation Button */
 .reservation-button {
+    display: inline-block;
     isolation: isolate;
     position: relative;
     border-width: 0px !important;
@@ -107,7 +108,6 @@
     background-color: #f9f9f9;
     border-radius: 25px;
     padding: 20px;
-    margin-top: 20px;
 }
 
 .reservation-recap .reservation-recap-card .reservation-recap-card-game-container {
@@ -115,16 +115,6 @@
     grid-template-columns: 1fr 2fr;
     gap: 20px;
     color: #000;
-}
-
-.reservation-recap h2 {
-    display: inline-flex;
-    padding: 0.5rem 1rem;
-    color: #fff;
-    background: var(--primary-gradient);
-    -webkit-border-radius: 2rem;
-    -moz-border-radius: 2rem;
-    border-radius: 2rem;
 }
 
 .reservation-recap-price {
@@ -161,4 +151,164 @@
     border-radius: 20px;
     padding: 20px;
     margin-top: 40px;
+}
+
+/* Activity listing */
+
+.rp-activity-listing {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media screen and (min-width: 800px) {
+    .rp-activity-listing {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+}
+
+.rp-activity-listing .rp-activity-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activity-image > img {
+    width: 100%;
+    max-height: 250px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activity-title {
+    font-weight: 600;
+    font-size: 27px;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activity-price {
+    font-size: 16px;
+    color: #000;
+    padding-bottom: 8px;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activity-price span {
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activty-meta {
+    display: flex;
+    font-size: 16px;
+    color: #000;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activty-meta .rp-activity-langues {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 3px;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activty-meta .rp-activity-langues img {
+    width: 20px;
+}
+
+/* Activity metadata */
+
+.activity-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 16px;
+}
+
+.activity-metadata p {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #000;
+    font-weight: 600;
+    padding-bottom: 0;
+}
+
+.activity-metadata p img {
+    width: 20px;
+}
+
+/* Gift card form */
+
+.gift_card_form > div {
+    margin-bottom: 50px;
+}
+
+.gift_card_form .gift_card_section_title {
+    font-size: 23px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.gift_card_form .montant_container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+}
+
+.gift_card_form .montant_container .gift_card_section_title {
+    grid-column: 1 / -1;
+}
+
+.gift_card_form .montant_container input[type="radio"] {
+    display: none;
+}
+.gift_card_form .montant_container label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #000;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 30px;
+    color: #000;
+    font-weight: 600;
+}
+
+.gift_card_form .montant_container label input[type="number"] {
+    border: none;
+    width: 75%;
+    font-size: 30px;
+    text-align: end;
+    color: inherit;
+    font-weight: 600;
+    background-color: transparent;
+    appearance: textfield;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+/* .gift_card_form .montant_container label:has(input[type="number"]),
+.gift_card_form .montant_container label:has(input[type="number"]:focus-visible) {
+    background-color: red;
+} */
+
+.gift_card_form .montant_container label input[type="number"]::placeholder {
+    font-size: 16px;
+    color: inherit;
+    opacity: 0.5;
+}
+
+.gift_card_form .montant_container label input[type="number"]::-webkit-outer-spin-button,
+.gift_card_form .montant_container label input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.gift_card_form .montant_container label:has(input[type="radio"]:checked),
+.gift_card_form .montant_container label:has(input[type="number"]),
+.gift_card_form .montant_container label:has(input[type="number"]:focus-visible) {
+    background: var(--primary-gradient);
+    color: #fff;
+    border-color: #fff;
 }
