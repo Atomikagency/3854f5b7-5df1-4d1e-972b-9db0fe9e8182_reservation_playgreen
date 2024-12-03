@@ -102,6 +102,7 @@ function rp_reservation_form_shortcode() {
         'duree'        => get_post_meta($activite_id, '_rp_duree', true),
         'note'         => get_post_meta($activite_id, '_rp_note', true),
         'resumé'       => get_the_excerpt($activite_id),
+        'activite'  => $activite_id,
     ];
 
     ob_start();

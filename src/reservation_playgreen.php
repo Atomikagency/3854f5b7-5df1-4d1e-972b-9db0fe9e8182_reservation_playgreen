@@ -57,6 +57,7 @@ function rp_enqueue_scripts()
         // Ajouter Flatpickr CSS et JS
         wp_enqueue_style('flatpickr-css', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css', [], '4.6.13');
         wp_enqueue_script('flatpickr-js', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js', [], '4.6.13', true);
+        wp_enqueue_script('flatpickr-js-fr', 'https://npmcdn.com/flatpickr/dist/l10n/fr.js', [], '4.6.13', true);
         // Ajouter Fastest Validator
         wp_enqueue_script('fastest-validator', 'https://unpkg.com/fastest-validator', [], '1.0.0', true);
         // Ajouter le script personnalisé pour le formulaire
