@@ -107,7 +107,6 @@
     background-color: #f9f9f9;
     border-radius: 25px;
     padding: 20px;
-    margin-top: 20px;
 }
 
 .reservation-recap .reservation-recap-card .reservation-recap-card-game-container {
@@ -115,16 +114,6 @@
     grid-template-columns: 1fr 2fr;
     gap: 20px;
     color: #000;
-}
-
-.reservation-recap h2 {
-    display: inline-flex;
-    padding: 0.5rem 1rem;
-    color: #fff;
-    background: var(--primary-gradient);
-    -webkit-border-radius: 2rem;
-    -moz-border-radius: 2rem;
-    border-radius: 2rem;
 }
 
 .reservation-recap-price {
@@ -161,4 +150,65 @@
     border-radius: 20px;
     padding: 20px;
     margin-top: 40px;
+}
+
+/* Activity listing */
+
+.rp-activity-listing {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media screen and (min-width: 800px) {
+    .rp-activity-listing {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+}
+
+.rp-activity-listing .rp-activity-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activity-image > img {
+    width: 100%;
+    max-height: 250px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activity-title {
+    font-weight: 600;
+    font-size: 27px;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activity-price {
+    font-size: 16px;
+    color: #000;
+    padding-bottom: 8px;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activity-price span {
+    font-weight: 600;
+    font-size: 22px;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activty-meta {
+    display: flex;
+    font-size: 16px;
+    color: #000;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activty-meta .rp-activity-langues {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 3px;
+}
+
+.rp-activity-listing .rp-activity-item .rp-activty-meta .rp-activity-langues img {
+    width: 20px;
 }

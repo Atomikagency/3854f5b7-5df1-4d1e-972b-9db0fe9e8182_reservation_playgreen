@@ -20,7 +20,7 @@ function rp_activity_listing_shortcode($atts) {
         return '<p>Aucune activité trouvée.</p>';
     }
 
-    $template_path = locate_template('views/activity_listing.php');
+    $template_path = RESERVATION_PLAYGREEN_PLUGIN_DIR . 'views/activity_listing.php'; 
 
     if (!$template_path) {
         return '';
