@@ -1,7 +1,7 @@
 <div class="reservation-form-container" style="display: flex; gap: 20px; align-items: flex-start;">
     <!-- Colonne gauche -->
     <div class="reservation-form-left" style="flex: 1;">
-        <form id="reservation-form" method="post">
+        <form id="reservation-form" method="post" data-activity="<?php echo $activity_meta['activite'] ?>">
             <?php wp_nonce_field('reservation_form_nonce', 'reservation_form_nonce_field'); ?>
             <!-- Sélection de la date -->
             <label for="reservation-date">Date *</label>
