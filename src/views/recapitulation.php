@@ -1,5 +1,4 @@
 <div class="reservation-recap">
-    <!-- <h2>Récapitulatif de votre réservation</h2> -->
     <div class="reservation-recap-card">
         <div class="reservation-recap-card-game-container">
             <img src="<?php echo esc_url($reservation_data['activite_thumbnail']); ?>" alt="<?php echo esc_html($reservation_data['activite_data']->post_title); ?>" style="width: 100%; border-radius: 20px;">

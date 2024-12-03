@@ -8,6 +8,7 @@
 
 /* Reservation Button */
 .reservation-button {
+    display: inline-block;
     isolation: isolate;
     position: relative;
     border-width: 0px !important;
@@ -210,5 +211,27 @@
 }
 
 .rp-activity-listing .rp-activity-item .rp-activty-meta .rp-activity-langues img {
+    width: 20px;
+}
+
+/* Activity metadata */
+
+.activity-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 16px;
+}
+
+.activity-metadata p {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #000;
+    font-weight: 600;
+    padding-bottom: 0;
+}
+
+.activity-metadata p img {
     width: 20px;
 }

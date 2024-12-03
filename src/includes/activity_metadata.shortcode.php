@@ -14,7 +14,7 @@ function rp_activity_metadata_shortcode($atts) {
     ];
 
     // Path to the template
-    $template_path = locate_template('views/activity_metadata.php');
+    $template_path = RESERVATION_PLAYGREEN_PLUGIN_DIR . 'views/activity_metadata.php'; 
 
     if (!$template_path) {
         return '<p>Template file not found: views/activity_metadata.php</p>';
