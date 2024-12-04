@@ -48,7 +48,7 @@ function rp_enqueue_scripts()
     wp_enqueue_script('rp-script', RESERVATION_PLAYGREEN_PLUGIN_URL . 'assets/js/script.js', [],'1.0.0', true);
 
     wp_localize_script('rp-script', 'ajax_object', [
-        'ajaxurl' => admin_url('admin-ajax.php'),
+        'ajax_url' => admin_url('admin-ajax.php'),
     ]);
 
     $reservation_form_page_id = get_option('rp_reservation_form_page');
