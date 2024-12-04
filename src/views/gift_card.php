@@ -4,19 +4,15 @@
     <div class="themes_container">
         <label>
             <input type="radio" name="theme" value="1">
-            <img src="/wp-content/uploads/2024/12/Theme-1.png" alt="Thème 1">
+            <img src="/wp-content/uploads/2024/12/gift-card-theme-1.png" alt="Thème 1">
         </label>
         <label>
             <input type="radio" name="theme" value="2">
-            <img src="/wp-content/uploads/2024/12/Theme-2.png" alt="Thème 2">
+            <img src="/wp-content/uploads/2024/12/gift-card-theme-2.png" alt="Thème 2">
         </label>
         <label>
             <input type="radio" name="theme" value="3">
-            <img src="/wp-content/uploads/2024/12/Theme-3.png" alt="Thème 3">
-        </label>
-        <label>
-            <input type="radio" name="theme" value="4">
-            <img src="/wp-content/uploads/2024/12/Theme-4.png" alt="Thème 4">
+            <img src="/wp-content/uploads/2024/12/gift-card-theme-3.png" alt="Thème 3">
         </label>
     </div>
 

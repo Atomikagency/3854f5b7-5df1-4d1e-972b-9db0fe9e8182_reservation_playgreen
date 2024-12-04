@@ -257,15 +257,9 @@
     border-color: #05703d;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 850px) {
     .gift_card_form .themes_container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media screen and (min-width: 1250px) {
-    .gift_card_form .themes_container {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 

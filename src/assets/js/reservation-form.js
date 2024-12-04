@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const prixEnfant = parseInt(rpReservationData.prixEnfant) || 0;
     const availableDates = rpReservationData.availableDates;
     const unavailabilityDates = rpReservationData.unavailabilityDates || [];
-    console.log(unavailabilityDates)
+    console.log(unavailabilityDates);
     // Mapper les jours de la semaine en index (0 = Dimanche, 1 = Lundi, ...)
     const dayMapping = {
         Dimanche: 0,
@@ -74,13 +74,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const currentDateStr = flatpickr.formatDate(currentDate, "Y-m-d");
 
         // Vérifier si la date est dans les dates d'indisponibilité
-        const isUnavailable = unavailabilityDates.some(dateRange => {
+        const isUnavailable = unavailabilityDates.some((dateRange) => {
             const startDate = new Date(dateRange.start);
-            const endDate = dateRange.end && dateRange.end !== '' ? new Date(dateRange.end) : startDate;
-            return currentDateStr === flatpickr.formatDate(startDate, "Y-m-d") || (currentDate >= startDate && currentDate <= endDate);
+            const endDate = dateRange.end && dateRange.end !== "" ? new Date(dateRange.end) : startDate;
+            return (
+                currentDateStr === flatpickr.formatDate(startDate, "Y-m-d") ||
+                (currentDate >= startDate && currentDate <= endDate)
+            );
         });
 
-        console.log(isUnavailable)
+        console.log(isUnavailable);
         if (availableDates[dayName] && !isUnavailable) {
             enabledDates.push(currentDateStr);
         }
@@ -169,32 +172,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     form.addEventListener("submit", validateForm);
 
-    nbAdultesInput.addEventListener("input", updateTotal);
-    nbEnfantsInput.addEventListener("input", updateTotal);
+    // nbAdultesInput.addEventListener("input", updateTotal);
+    // nbEnfantsInput.addEventListener("input", updateTotal);
 
-
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
         // Fonction pour calculer le total
         function calculerTotal() {
             const data = {
-                action: 'calculer_total_paiement',
-                activite_id: $('#reservation-form').attr('data-activity'),
-                nb_adulte: $('#reservation-adultes').val(),
-                nb_enfant: $('#reservation-enfants').val(),
-                code_promo: $('#reservation-cp').val()
+                action: "calculer_total_paiement",
+                activite_id: $("#reservation-form").attr("data-activity"),
+                nb_adulte: $("#reservation-adultes").val(),
+                nb_enfant: $("#reservation-enfants").val(),
+                code_promo: $("#reservation-cp").val(),
             };
-            $.post(ajax_object.ajax_url, data, function(response) {
+            $.post(ajax_object.ajax_url, data, function (response) {
                 console.log(response);
 
                 if (response.success) {
-                    const priceWithDiscount = $('#price-with-discount');
-                    const priceContainer = $('.reservation-form-price');
+                    const priceWithDiscount = $("#price-with-discount");
+                    const priceContainer = $(".reservation-form-price");
 
                     // Mettre à jour le prix total
                     priceWithDiscount.text(response.data.total);
 
                     // Supprimer l'élément du prix sans réduction s'il existe
-                    $('.reservation-form-price-without-discount').remove();
+                    $(".reservation-form-price-without-discount").remove();
 
                     if (response.data.discount_is_valid) {
                         priceContainer.append(`
@@ -204,17 +206,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     `);
                     }
                 } else {
-                    console.error('Erreur: ', response.data.message);
+                    console.error("Erreur: ", response.data.message);
                 }
             });
         }
 
         // Détecter les changements ou les entrées dans les champs
-        $('#reservation-adultes, #reservation-enfants, #reservation-cp').on('input change', function() {
+        $("#reservation-adultes, #reservation-enfants, #reservation-cp").on("input change", function () {
             calculerTotal();
         });
     });
-
-
-
 });
