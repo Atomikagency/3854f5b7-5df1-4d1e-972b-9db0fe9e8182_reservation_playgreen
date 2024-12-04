@@ -16,12 +16,12 @@
     font-size: 17px;
     color: #ffffff !important;
     padding: 7px 17px;
-    background: transparent;
+    background-color: #8b9279;
     overflow: hidden;
     cursor: pointer;
 }
 
-.reservation-button::after,
+/* .reservation-button::after,
 .reservation-button::before {
     content: "";
     position: absolute;
@@ -42,7 +42,7 @@
 }
 .reservation-button:hover::before {
     opacity: 1;
-}
+} */
 
 /* Reservation form */
 
@@ -85,10 +85,7 @@
 .reservation-form-container .reservation-form-right .reservation-form-price .reservation-form-price-total {
     font-size: 2em;
     font-weight: 600;
-    background: var(--primary-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #8b9279;
 }
 
 .reservation-form-container .reservation-form-right .reservation-form-price .reservation-form-price-without-discount {
@@ -127,10 +124,7 @@
 .reservation-recap-price-total {
     font-size: 2em;
     font-weight: 600;
-    background: var(--primary-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #8b9279;
     padding-bottom: 0;
 }
 
@@ -364,7 +358,7 @@
 .gift_card_form .montant_container label:has(input[type="radio"]:checked),
 .gift_card_form .montant_container label:has(input[type="number"][data-filled]),
 .gift_card_form .montant_container label:has(input[type="number"]:focus-visible) {
-    background: var(--primary-gradient);
+    background-color: #8b9279;
     color: #fff;
     border-color: #fff;
 }
