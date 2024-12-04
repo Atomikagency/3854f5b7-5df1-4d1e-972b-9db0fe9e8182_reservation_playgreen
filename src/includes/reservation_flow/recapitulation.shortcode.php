@@ -1,6 +1,7 @@
 <?php
 // Ajouter un shortcode pour afficher le récapitulatif d'une réservation
-function rp_reservation_recap_shortcode($atts) {
+function rp_reservation_recap_shortcode($atts)
+{
     // Vérifier si un ID de réservation est fourni via GET
     if (isset($_GET['reservation_id'])) {
         $reservation_id = intval($_GET['reservation_id']);
@@ -9,16 +10,16 @@ function rp_reservation_recap_shortcode($atts) {
         if (get_post_type($reservation_id) === 'reservation') {
             $reservation_data = [
                 'id' => $reservation_id,
-                'date'      => get_post_meta($reservation_id, '_rp_date', true),
-                'heure'     => get_post_meta($reservation_id, '_rp_heure', true),
-                'nom'       => get_post_meta($reservation_id, '_rp_nom', true),
-                'prenom'    => get_post_meta($reservation_id, '_rp_prenom', true),
-                'email'     => get_post_meta($reservation_id, '_rp_email', true),
-                'langue'    => get_post_meta($reservation_id, '_rp_langue', true),
-                'adultes'   => get_post_meta($reservation_id, '_rp_nb_adultes', true),
-                'enfants'   => get_post_meta($reservation_id, '_rp_nb_enfants', true),
+                'date' => get_post_meta($reservation_id, '_rp_date', true),
+                'heure' => get_post_meta($reservation_id, '_rp_heure', true),
+                'nom' => get_post_meta($reservation_id, '_rp_nom', true),
+                'prenom' => get_post_meta($reservation_id, '_rp_prenom', true),
+                'email' => get_post_meta($reservation_id, '_rp_email', true),
+                'langue' => get_post_meta($reservation_id, '_rp_langue', true),
+                'adultes' => get_post_meta($reservation_id, '_rp_nb_adultes', true),
+                'enfants' => get_post_meta($reservation_id, '_rp_nb_enfants', true),
                 'activite' => intval(get_post_meta($reservation_id, '_rp_activite_id', true)),
-                'activite_data' => get_post(intval(get_post_meta($reservation_id, '_rp_activite_id', true)),'activite'),
+                'activite_data' => get_post(intval(get_post_meta($reservation_id, '_rp_activite_id', true)), 'activite'),
                 'activite_duration' => get_post_meta(get_post_meta($reservation_id, '_rp_activite_id', true), '_rp_duree', true),
                 'activite_thumbnail' => get_the_post_thumbnail_url(intval(get_post_meta($reservation_id, '_rp_activite_id', true)))
             ];
@@ -47,6 +48,30 @@ function rp_reservation_recap_shortcode($atts) {
                     }
                 }
             }
+
+
+            $carte_cadeau = get_post_meta($reservation_id, '_rp_carte_cadeau', true); // Champ personnalisé dans la réservation
+            if (!empty($carte_cadeau)) {
+                $carte_cadeau_is_valid = false;
+                $promo_query = new WP_Query([
+                    'post_type' => 'carte_cadeau',
+                    'title' => $carte_cadeau,
+                    'post_status' => 'publish',
+                    'posts_per_page' => 1,
+                ]);
+
+                if ($promo_query->have_posts()) {
+                    $gift = $promo_query->posts[0];
+                    $consumedCarteCadeau = floatval(get_post_meta($gift->ID, 'consumed', true));
+                    $totalCarteCadeau = floatval(get_post_meta($gift->ID, 'montant', true));
+                    $remainingToSub = max($totalCarteCadeau - $consumedCarteCadeau, 0);
+
+                    if ($remainingToSub > 0) {
+                        $carte_cadeau_is_valid = true;
+                        $total = max($total - $remainingToSub, 0);
+                    }
+                }
+            }
             $total = max($total, 0);
 
             $reservation_data['total'] = $total;
@@ -67,6 +92,7 @@ function rp_reservation_recap_shortcode($atts) {
         return '<p style="color: red;">Aucune réservation spécifiée.</p>';
     }
 }
+
 add_shortcode('reservation_recap', 'rp_reservation_recap_shortcode');
 
 

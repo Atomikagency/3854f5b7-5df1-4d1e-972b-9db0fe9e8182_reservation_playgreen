@@ -56,6 +56,7 @@ function gift_card_meta_box_callback($post) {
         'message' => __('Message', 'text_domain'),
         'state' => __('Statut', 'text_domain'),
         'stripe_payment_id' => __('ID de Paiement Stripe', 'text_domain'),
+        'consumed' => __('Montant consummé', 'text_domain'),
     ];
 
     foreach ($fields as $field => $label) {
@@ -96,6 +97,7 @@ function save_gift_card_meta($post_id) {
         'message' => 'sanitize_textarea_field',
         'state' => 'sanitize_text_field',
         'stripe_payment_id' => 'sanitize_text_field',
+        'consumed' => 'sanitize_text_field'
     ];
 
     foreach ($fields as $field => $sanitizer) {
@@ -109,8 +111,8 @@ add_action('save_post', 'save_gift_card_meta');
 // Add Custom Columns for Admin List View
 function gift_card_custom_columns($columns) {
     unset($columns['date']);
-    $columns['email'] = __('Email', 'text_domain');
     $columns['montant'] = __('Montant', 'text_domain');
+    $columns['montant_consumed'] = __('Montant Consommé', 'text_domain');
     $columns['state'] = __('Statut', 'text_domain');
     return $columns;
 }
@@ -118,14 +120,18 @@ add_filter('manage_carte_cadeau_posts_columns', 'gift_card_custom_columns');
 
 function gift_card_custom_column_content($column, $post_id) {
     switch ($column) {
-        case 'email':
-            echo esc_html(get_post_meta($post_id, 'email', true));
-            break;
         case 'montant':
             echo esc_html(get_post_meta($post_id, 'montant', true));
             break;
         case 'state':
             echo esc_html(get_post_meta($post_id, 'state', true));
+            break;
+        case 'montant_consumed':
+            $consumed = get_post_meta($post_id, 'consumed', true);
+            if(empty($consumed)){
+                echo '0';
+            }
+            echo esc_html($consumed);
             break;
     }
 }

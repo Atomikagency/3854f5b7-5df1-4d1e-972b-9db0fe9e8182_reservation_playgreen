@@ -51,7 +51,8 @@ function rp_reservation_form_shortcode() {
             'adultes'   => intval($_POST['reservation_adultes']),
             'enfants'   => intval($_POST['reservation_enfants']),
             'activite'  => $activite_id,
-            'code_promo' => sanitize_text_field($_POST['reservation_code_promo'])
+            'code_promo' => sanitize_text_field($_POST['reservation_code_promo']),
+            'carte_cadeau' => sanitize_text_field($_POST['reservation_carte_cadeau'])
         ];
 
         // Créer un nouveau post pour la réservation
@@ -73,7 +74,8 @@ function rp_reservation_form_shortcode() {
             update_post_meta($reservation_id, '_rp_nb_enfants', $reservation_data['enfants']);
             update_post_meta($reservation_id, '_rp_activite_id', $reservation_data['activite']);
             update_post_meta($reservation_id, '_rp_state', 'in_progress'); // Statut par défaut "in progress"
-            update_post_meta($reservation_id, '_rp_code_promo', $reservation_data['code_promo']); // Statut par défaut "in progress"
+            update_post_meta($reservation_id, '_rp_code_promo', $reservation_data['code_promo']);
+            update_post_meta($reservation_id, '_rp_carte_cadeau', $reservation_data['carte_cadeau']);
 
             $recap_page_id = get_option('rp_recap_page');
             if ($recap_page_id) {

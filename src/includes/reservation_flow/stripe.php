@@ -80,6 +80,30 @@ function rp_handle_payment_request()
                         }
                     }
                 }
+
+                $carte_cadeau = get_post_meta($reservation_id, '_rp_carte_cadeau', true); // Champ personnalisé dans la réservation
+                if (!empty($carte_cadeau)) {
+                    $carte_cadeau_is_valid = false;
+                    $promo_query = new WP_Query([
+                        'post_type' => 'carte_cadeau',
+                        'title' => $carte_cadeau,
+                        'post_status' => 'publish',
+                        'posts_per_page' => 1,
+                    ]);
+
+                    if ($promo_query->have_posts()) {
+                        $gift = $promo_query->posts[0];
+                        $consumedCarteCadeau = floatval(get_post_meta($gift->ID, 'consumed', true));
+                        $totalCarteCadeau = floatval(get_post_meta($gift->ID, 'montant', true));
+                        $remainingToSub = max($totalCarteCadeau - $consumedCarteCadeau, 0);
+
+                        if ($remainingToSub > 0) {
+                            $carte_cadeau_is_valid = true;
+                            $total_amount = max($total_amount - $remainingToSub, 0);
+                        }
+                    }
+                }
+
                 $total_amount = max($total_amount, 0);
 
                 $application_fee_amount = 0; // Frais pour la plateforme en centimes
@@ -225,7 +249,6 @@ function rp_handle_payment_processing()
                         // Rechercher le code promo dans le CPT
                         $promo_post = get_page_by_title($promo_code, OBJECT, 'promo_code');
 
-
                         if ($promo_post) {
                             // Récupérer le pourcentage de réduction
                             $discount_percentage = intval(get_post_meta($promo_post->ID, '_promo_percentage', true));
@@ -237,7 +260,37 @@ function rp_handle_payment_processing()
                             }
                         }
                     }
+
+                    $carte_cadeau = get_post_meta($reservation_id, '_rp_carte_cadeau', true); // Champ personnalisé dans la réservation
+                    if (!empty($carte_cadeau)) {
+                        $carte_cadeau_is_valid = false;
+                        $promo_query = new WP_Query([
+                            'post_type' => 'carte_cadeau',
+                            'title' => $carte_cadeau,
+                            'post_status' => 'publish',
+                            'posts_per_page' => 1,
+                        ]);
+
+                        if ($promo_query->have_posts()) {
+                            $gift = $promo_query->posts[0];
+                            $consumedCarteCadeau = floatval(get_post_meta($gift->ID, 'consumed', true));
+                            $totalCarteCadeau = floatval(get_post_meta($gift->ID, 'montant', true));
+                            $remainingToSub = max($totalCarteCadeau - $consumedCarteCadeau, 0);
+
+                            if ($remainingToSub > 0) {
+                                $total = min($total,$remainingToSub);
+                                $consumedCarteCadeau = update_post_meta($gift->ID, 'consumed', ($total+$consumedCarteCadeau));
+                                $total = max($total - $remainingToSub, 0);
+                            }
+                        }
+                    }
+
                     $total = max($total, 0);
+
+
+
+
+
 
                     $subject_client = "Confirmation de votre réservation";
                     $message_client = "
@@ -257,10 +310,6 @@ function rp_handle_payment_processing()
     Cordialement,
     L’équipe de Playgreen
 ";
-
-
-
-
 
 
 

@@ -51,6 +51,9 @@
             <label for="reservation-cp">Code promo</label>
             <input type="text" id="reservation-cp" name="reservation_code_promo" >
 
+            <label for="reservation-cc">Carte cadeau</label>
+            <input type="text" id="reservation-cc" name="reservation_carte_cadeau" >
+
             <div style="display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px;">
                 <input type="checkbox" id="reservation-cgv" name="reservation_cgv" required>
                 <label for="reservation-cgv">

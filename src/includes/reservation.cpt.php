@@ -45,6 +45,7 @@ function rp_render_reservation_meta_box($post) {
         'stripe_charge_id'=> get_post_meta($post->ID, '_rp_stripe_charge_id', true),
         'state'           => get_post_meta($post->ID, '_rp_state', true),
         'code_promo' => get_post_meta($post->ID, '_rp_code_promo', true),
+        'carte_cadeau' => get_post_meta($post->ID, '_rp_carte_cadeau', true),
     ];
 
     $activites = get_posts([
@@ -118,6 +119,10 @@ function rp_render_reservation_meta_box($post) {
             <td><input type="text" name="rp_code_promo" id="rp_code_promo" value="<?php echo esc_attr($fields['code_promo']); ?>" style="width: 100%;"></td>
         </tr>
         <tr>
+            <th><label for="rp_carte_cadeau">Carte Cadeau</label></th>
+            <td><input type="text" name="rp_carte_cadeau" id="rp_carte_cadeau" value="<?php echo esc_attr($fields['carte_cadeau']); ?>" style="width: 100%;"></td>
+        </tr>
+        <tr>
             <th><label for="rp_is_paid">Paiement reçu</label></th>
             <td>
                 <select name="rp_is_paid" id="rp_is_paid" style="width: 100%;">
@@ -126,10 +131,10 @@ function rp_render_reservation_meta_box($post) {
                 </select>
             </td>
         </tr>
-        <tr>
-            <th><label for="rp_stripe_charge_id">Stripe Charge ID</label></th>
-            <td><input type="text" name="rp_stripe_charge_id" id="rp_stripe_charge_id" value="<?php echo esc_attr($fields['stripe_charge_id']); ?>" style="width: 100%;"></td>
-        </tr>
+<!--        <tr>-->
+<!--            <th><label for="rp_stripe_charge_id">Stripe Charge ID</label></th>-->
+<!--            <td><input type="text" name="rp_stripe_charge_id" id="rp_stripe_charge_id" value="--><?php //echo esc_attr($fields['stripe_charge_id']); ?><!--" style="width: 100%;"></td>-->
+<!--        </tr>-->
     </table>
     <?php
 }
@@ -138,7 +143,7 @@ function rp_render_reservation_meta_box($post) {
 function rp_save_reservation_meta($post_id) {
     $fields = [
         'activite_id', 'email', 'nom', 'prenom', 'langue',
-        'nb_adultes', 'nb_enfants', 'date', 'heure', 'is_paid', 'stripe_charge_id', 'state'
+        'nb_adultes', 'nb_enfants', 'date', 'heure', 'is_paid', 'stripe_charge_id', 'state', 'carte_cadeau'
     ];
 
     foreach ($fields as $field) {
