@@ -252,8 +252,6 @@ function rp_handle_payment_processing()
     - Langue : {$reservation_data['langue']}
     - Total : {$total}
     
-    Vous pouvez télécharger votre facture ici : <a href='{$session->invoice_pdf}'>Télécharger la facture</a>
-
     Nous avons hâte de vous accueillir !
 
     Cordialement,

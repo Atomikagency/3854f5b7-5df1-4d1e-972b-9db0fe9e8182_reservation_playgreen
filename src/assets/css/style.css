@@ -16,12 +16,12 @@
     font-size: 17px;
     color: #ffffff !important;
     padding: 7px 17px;
-    background: transparent;
+    background-color: #8b9279;
     overflow: hidden;
     cursor: pointer;
 }
 
-.reservation-button::after,
+/* .reservation-button::after,
 .reservation-button::before {
     content: "";
     position: absolute;
@@ -42,7 +42,7 @@
 }
 .reservation-button:hover::before {
     opacity: 1;
-}
+} */
 
 /* Reservation form */
 
@@ -85,10 +85,7 @@
 .reservation-form-container .reservation-form-right .reservation-form-price .reservation-form-price-total {
     font-size: 2em;
     font-weight: 600;
-    background: var(--primary-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #8b9279;
 }
 
 .reservation-form-container .reservation-form-right .reservation-form-price .reservation-form-price-without-discount {
@@ -127,10 +124,7 @@
 .reservation-recap-price-total {
     font-size: 2em;
     font-weight: 600;
-    background: var(--primary-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #8b9279;
     padding-bottom: 0;
 }
 
@@ -238,6 +232,50 @@
 
 /* Gift card form */
 
+.gift_card_form .themes_container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.gift_card_form .themes_container label img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 3px solid transparent;
+}
+
+.gift_card_form .themes_container label:has(input:checked) img {
+    border-color: #05703d;
+}
+
+@media screen and (min-width: 850px) {
+    .gift_card_form .themes_container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.gift_card_form input[type="text"],
+.gift_card_form textarea {
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+.gift_card_form input[type="email"] {
+    display: block;
+    border-radius: 5px;
+    width: 50%;
+    padding: 5px 10px;
+}
+
+.gift_card_form textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
 .gift_card_form > div {
     margin-bottom: 50px;
 }
@@ -247,6 +285,7 @@
     font-weight: 700;
     color: #000;
     margin-bottom: 10px;
+    padding-bottom: 0;
 }
 
 .gift_card_form .montant_container {
@@ -255,12 +294,27 @@
     gap: 20px;
 }
 
+@media screen and (max-width: 900px) {
+    .gift_card_form .montant_container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .gift_card_form .montant_container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 .gift_card_form .montant_container .gift_card_section_title {
     grid-column: 1 / -1;
 }
 
-.gift_card_form .montant_container input[type="radio"] {
-    display: none;
+.gift_card_form .montant_container input[type="radio"],
+.gift_card_form .themes_container input[type="radio"] {
+    position: fixed;
+    top: -200%;
+    left: -200%;
 }
 .gift_card_form .montant_container label {
     cursor: pointer;
@@ -273,6 +327,7 @@
     font-size: 30px;
     color: #000;
     font-weight: 600;
+    min-height: 65px;
 }
 
 .gift_card_form .montant_container label input[type="number"] {
@@ -288,11 +343,6 @@
     -moz-appearance: textfield;
 }
 
-/* .gift_card_form .montant_container label:has(input[type="number"]),
-.gift_card_form .montant_container label:has(input[type="number"]:focus-visible) {
-    background-color: red;
-} */
-
 .gift_card_form .montant_container label input[type="number"]::placeholder {
     font-size: 16px;
     color: inherit;
@@ -306,9 +356,16 @@
 }
 
 .gift_card_form .montant_container label:has(input[type="radio"]:checked),
-.gift_card_form .montant_container label:has(input[type="number"]),
+.gift_card_form .montant_container label:has(input[type="number"][data-filled]),
 .gift_card_form .montant_container label:has(input[type="number"]:focus-visible) {
-    background: var(--primary-gradient);
+    background-color: #8b9279;
     color: #fff;
     border-color: #fff;
+}
+
+.gift_card_form .message_container label:has(input:checked) span:last-of-type,
+.gift_card_form .message_container label:has(input:not(:checked)) span:first-of-type,
+.gift_card_form .envoie_direct_container label:has(input:checked) span:last-of-type,
+.gift_card_form .envoie_direct_container label:has(input:not(:checked)) span:first-of-type {
+    display: none;
 }

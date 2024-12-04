@@ -1,7 +1,7 @@
 <div class="reservation-form-container" style="display: flex; gap: 20px; align-items: flex-start;">
     <!-- Colonne gauche -->
     <div class="reservation-form-left" style="flex: 1;">
-        <form id="reservation-form" method="post">
+        <form id="reservation-form" method="post" data-activity="<?php echo $activity_meta['activite'] ?>">
             <?php wp_nonce_field('reservation_form_nonce', 'reservation_form_nonce_field'); ?>
             <!-- Sélection de la date -->
             <label for="reservation-date">Date *</label>
@@ -63,7 +63,8 @@
 
             <!-- Soumettre -->
             <button type="submit" class="button reservation-button" name="form_reservation_submit" id="reservation-submit" style="padding: 12px 35px; width: 100%;">Réserver</button>
-            <p style="margin-top: 20px; color: #000; font-weight: 500;">1: Enfants de 3 à 17 ans - Gratuit pour les moins de 3 ans</p>
+            <p style="margin-top: 20px; color: #000; font-weight: 500;">Vous êtes une entreprise ? Vous pourrez saisir vos informations au moment du paiement.</p>
+            <p style="color: #000; font-weight: 500;">1: Enfants de 3 à 17 ans - Gratuit pour les moins de 3 ans</p>
         </form>
     </div>
 
