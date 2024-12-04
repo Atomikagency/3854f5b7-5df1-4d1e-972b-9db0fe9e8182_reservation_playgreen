@@ -1,4 +1,4 @@
-<form id="gift_card" method="post" class="gift_card_form">
+<form id="gift_card" method="post" class="gift_card_form" action="<?php echo site_url('/reservation-payment-gift') ?>">
 
     <div class="col-2">
         <!-- Email -->
