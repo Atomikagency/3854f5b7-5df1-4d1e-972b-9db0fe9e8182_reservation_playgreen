@@ -116,15 +116,6 @@ document.addEventListener("DOMContentLoaded", function () {
         },
     });
 
-    // Mise à jour du total
-    function updateTotal() {
-        const nbAdultes = parseInt(nbAdultesInput.value) || 0;
-        const nbEnfants = parseInt(nbEnfantsInput.value) || 0;
-
-        const total = nbAdultes * prixAdulte + nbEnfants * prixEnfant;
-        totalField.textContent = total;
-    }
-
     function validateForm(e) {
         if (isValidated) {
             return;
@@ -171,9 +162,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     form.addEventListener("submit", validateForm);
-
-    // nbAdultesInput.addEventListener("input", updateTotal);
-    // nbEnfantsInput.addEventListener("input", updateTotal);
 
     jQuery(document).ready(function ($) {
         // Fonction pour calculer le total
