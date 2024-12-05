@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
             optionnal: false,
             messages: { email: "Veuillez renseigner une adresse email valide" },
         },
-        reservation_langue: { type: "string", optionnal: false },
+        reservation_francais: { type: "boolean", optionnal: true, convert: true, default: false },
+        reservation_anglais: { type: "boolean", optionnal: true, convert: true, default: false },
         reservation_adultes: { type: "number", optionnal: true, convert: true },
         reservation_enfants: { type: "number", optionnal: true, convert: true },
         reservation_code_promo: { type: "string", optionnal: true },
@@ -146,6 +147,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 ];
             }
         }
+        if (!formData.reservation_francais && !formData.reservation_anglais) {
+            if (Array.isArray(validatorRes)) {
+                validatorRes.push({
+                    type: "required",
+                    message: "Veuillez sélectionner une langue",
+                });
+            } else {
+                validatorRes = [
+                    {
+                        type: "required",
+                        message: "Veuillez sélectionner une langue",
+                    },
+                ];
+            }
+        }
 
         if (Array.isArray(validatorRes) && validatorRes.length > 0) {
             errorContainer.innerHTML = "";
@@ -157,8 +173,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             return;
         } else {
-            isValidated = true;
-            form.submit();
+            // isValidated = true;
+            // form.submit();
         }
     }
 
@@ -173,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 nb_adulte: $("#reservation-adultes").val(),
                 nb_enfant: $("#reservation-enfants").val(),
                 code_promo: $("#reservation-cp").val(),
-                carte_cadeau: $('#reservation-cc').val()
+                carte_cadeau: $("#reservation-cc").val(),
             };
 
             console.log(data);
@@ -204,8 +220,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Détecter les changements ou les entrées dans les champs
-        $("#reservation-adultes, #reservation-enfants, #reservation-cp, #reservation-cc").on("input change", function () {
-            calculerTotal();
-        });
+        $("#reservation-adultes, #reservation-enfants, #reservation-cp, #reservation-cc").on(
+            "input change",
+            function () {
+                calculerTotal();
+            }
+        );
     });
 });

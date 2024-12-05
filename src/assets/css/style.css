@@ -53,6 +53,17 @@
     }
 }
 
+.reservation-form-container .reservation-form-left .reservation-langue > div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-content: center;
+}
+
+.reservation-form-container .reservation-form-left .reservation-langue div label {
+    margin: 0 !important;
+}
+
 .reservation-form-container .reservation-form-left #reservation-form label {
     display: block;
     font-weight: 600;

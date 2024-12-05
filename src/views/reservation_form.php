@@ -31,21 +31,27 @@
             <input type="email" id="reservation-email" name="reservation_email" required>
 
             <!-- Langue -->
-            <label for="reservation-langue">Langue *</label>
-            <select id="reservation-langue" name="reservation_langue" required>
+            <p style="font-weight: 600; font-size: 16px; margin-top: 20px; margin-bottom: 5px;">Langue *</p>
+            <div class="reservation-langue">
                 <?php if ($activity_meta['langue_fr']) : ?>
-                    <option value="fr">Français</option>
+                    <div style="margin-bottom: 10px;">
+                        <input type="checkbox" id="reservation_francais" name="reservation_francais" <?php if (!$activity_meta['langue_en']) : ?> checked <?php endif; ?>>
+                        <label for="reservation_francais">Français</label>
+                    </div>
                 <?php endif; ?>
                 <?php if ($activity_meta['langue_en']) : ?>
-                    <option value="en">Anglais</option>
+                    <div>
+                        <input type="checkbox" id="reservation_anglais" name="reservation_anglais" <?php if (!$activity_meta['langue_fr']) : ?> checked <?php endif; ?>>
+                        <label for="reservation_anglais">Anglais</label>
+                    </div>
                 <?php endif; ?>
-            </select>
+            </div>
 
             <!-- Nombre de personnes -->
             <label for="reservation-adultes">Nombre d'adultes (<?php echo esc_html($activity_meta['prix_adulte']); ?>€ par adulte)</label>
             <input type="number" id="reservation-adultes" name="reservation_adultes" min="0" value="0" required>
 
-            <label for="reservation-enfants">Nombre d'enfants (<?php echo esc_html($activity_meta['prix_enfant']); ?>€ par enfant) <sup style="font-size: 12px;">1</sup></label>
+            <label for="reservation-enfants">Nombre de jeunes (<?php echo esc_html($activity_meta['prix_enfant']); ?>€ par jeune) <sup style="font-size: 12px;">1</sup></label>
             <input type="number" id="reservation-enfants" name="reservation_enfants" min="0" value="0" required>
 
             <label for="reservation-cp">Code promo</label>
@@ -67,7 +73,7 @@
             <!-- Soumettre -->
             <button type="submit" class="button reservation-button" name="form_reservation_submit" id="reservation-submit" style="padding: 12px 35px; width: 100%;">Réserver</button>
             <p style="margin-top: 20px; color: #000; font-weight: 500;">Vous êtes une entreprise ? Vous pourrez saisir vos informations au moment du paiement.</p>
-            <p style="color: #000; font-weight: 500;">1: Enfants de 3 à 17 ans - Gratuit pour les moins de 3 ans</p>
+            <p style="color: #000; font-weight: 500;">1: Jeunes de 3 à 17 ans - Gratuit pour les moins de 3 ans</p>
         </form>
     </div>
 
