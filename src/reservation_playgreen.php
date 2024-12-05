@@ -37,7 +37,7 @@ require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gitf_card/gift_card.cpt
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gitf_card/stripe.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gitf_card/gift_meta.shortcode.php';
 
-
+//
 
 // add asset style
 function rp_enqueue_styles()
