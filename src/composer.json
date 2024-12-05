@@ -1,5 +1,7 @@
 {
     "require": {
-        "stripe/stripe-php": "^16.3"
+        "stripe/stripe-php": "^16.3",
+        "setasign/fpdi": "^2.6",
+        "setasign/fpdf": "^1.8"
     }
 }

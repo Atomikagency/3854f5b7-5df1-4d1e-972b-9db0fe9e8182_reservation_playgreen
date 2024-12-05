@@ -1,6 +1,25 @@
-<form id="gift_card" method="post" class="gift_card_form">
+<form id="gift_card" method="post" class="gift_card_form" action="<?php echo site_url('/reservation-payment-gift') ?>">
+
+    <div class="col-2">
+        <!-- Email -->
+        <div class="email_container">
+            <p class="gift_card_section_title">Votre adresse email</p>
+            <label>
+                <input type="email" name="email" placeholder="dupont.jean@mail.com" required>
+            </label>
+            <small>Vous recevrez la confirmation de votre commande à cette adresse</small>
+        </div>
+
+        <!-- Envoi direct -->
+        <div>
+            <p class="gift_card_section_title">A qui voulez-vous envoyer votre carte cadeau ?</p>
+            <input type="email" name="emailSend" placeholder="Email du destinataire" required>
+            <small>Adresse email qui recevera la carte cadeau</small>
+        </div>
+    </div>
+
     <!-- Thèmes -->
-    <p class="gift_card_section_title">Choisissez votre thème :</p>
+    <p class="gift_card_section_title">Choisissez votre thème</p>
     <div class="themes_container">
         <label>
             <input type="radio" name="theme" value="1">
@@ -18,7 +37,7 @@
 
     <!-- Montant -->
     <div class="montant_container">
-        <p class="gift_card_section_title">Choisissez un montant :</p>
+        <p class="gift_card_section_title">Choisissez un montant</p>
         <label>
             <input type="radio" name="preset_amount" value="50"> 50 €
         </label>
@@ -40,35 +59,25 @@
         <input type="hidden" name="montant" value="">
     </div>
 
+    <h3 style="font-size: 23px; font-weight: 700; margin-bottom: 10px; margin-top: 60px;">Contenu de la carte cadeau</h3>
+
+
+    <div class="col-2">
+        <div>
+            <p class="gift_card_section_title">De la part de</p>
+            <input type="text" name="from" required>
+        </div>
+
+        <div>
+            <p class="gift_card_section_title">Pour</p>
+            <input type="text" name="to" required>
+        </div>
+    </div>
+
     <!-- Message -->
     <div class="message_container">
-        <p class="gift_card_section_title">Souhaitez-vous écrire un message ?</p>
-        <label>
-            <input type="checkbox" name="add_message" checked>
-            <span>Oui</span>
-            <span>Non</span>
-        </label>
-        <textarea name="message" placeholder="Votre message"></textarea>
-    </div>
-
-    <!-- Email -->
-    <div class="email_container">
-        <p class="gift_card_section_title">Renseignez votre adresse email</p>
-        <label>
-            <input type="email" name="email" placeholder="dupont.jean@mail.com">
-        </label>
-    </div>
-
-    <!-- Envoi direct -->
-    <div class="envoie_direct_container">
-        <p class="gift_card_section_title">Souhaitez-vous directement envoyer la carte par mail ?</p>
-        <p>(Vous recevrez aussi la carte par mail)</p><br/>
-        <label>
-            <input type="checkbox" name="send_direct" checked>
-            <span>Oui</span>
-            <span>Non</span>
-        </label>
-        <input type="email" name="emailSend" placeholder="Email du destinataire">
+    <p class="gift_card_section_title">Votre message</p>
+        <textarea name="message" id="message" placeholder="Votre message"></textarea>
     </div>
 
     <!-- RGPD -->

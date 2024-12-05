@@ -80,6 +80,30 @@ function rp_handle_payment_request()
                         }
                     }
                 }
+
+                $carte_cadeau = get_post_meta($reservation_id, '_rp_carte_cadeau', true); // Champ personnalisé dans la réservation
+                if (!empty($carte_cadeau)) {
+                    $carte_cadeau_is_valid = false;
+                    $promo_query = new WP_Query([
+                        'post_type' => 'carte_cadeau',
+                        'title' => $carte_cadeau,
+                        'post_status' => 'publish',
+                        'posts_per_page' => 1,
+                    ]);
+
+                    if ($promo_query->have_posts()) {
+                        $gift = $promo_query->posts[0];
+                        $consumedCarteCadeau = floatval(get_post_meta($gift->ID, 'consumed', true));
+                        $totalCarteCadeau = floatval(get_post_meta($gift->ID, 'montant', true));
+                        $remainingToSub = max($totalCarteCadeau - $consumedCarteCadeau, 0);
+
+                        if ($remainingToSub > 0) {
+                            $carte_cadeau_is_valid = true;
+                            $total_amount = max($total_amount - $remainingToSub, 0);
+                        }
+                    }
+                }
+
                 $total_amount = max($total_amount, 0);
 
                 $application_fee_amount = 0; // Frais pour la plateforme en centimes
@@ -109,7 +133,7 @@ function rp_handle_payment_request()
 
                 ];
                 if (!empty($stripe_connect_id) && $commission_percentage > 0) {
-                    $application_fee_amount = (($total_amount*100) * $commission_percentage) / 100;
+                    $application_fee_amount = (($total_amount * 100) * $commission_percentage) / 100;
 
                     $transfer_data = [
                         'destination' => $stripe_connect_id, // Compte Stripe Connect
@@ -203,14 +227,14 @@ function rp_handle_payment_processing()
 
                     $reservation_data = [
                         'id' => $reservation_id,
-                        'date'      => get_post_meta($reservation_id, '_rp_date', true),
-                        'heure'     => get_post_meta($reservation_id, '_rp_heure', true),
-                        'nom'       => get_post_meta($reservation_id, '_rp_nom', true),
-                        'prenom'    => get_post_meta($reservation_id, '_rp_prenom', true),
-                        'email'     => get_post_meta($reservation_id, '_rp_email', true),
-                        'langue'    => get_post_meta($reservation_id, '_rp_langue', true)  == 'fr' ? 'Français' : 'Anglais',
-                        'adultes'   => get_post_meta($reservation_id, '_rp_nb_adultes', true),
-                        'enfants'   => get_post_meta($reservation_id, '_rp_nb_enfants', true),
+                        'date' => get_post_meta($reservation_id, '_rp_date', true),
+                        'heure' => get_post_meta($reservation_id, '_rp_heure', true),
+                        'nom' => get_post_meta($reservation_id, '_rp_nom', true),
+                        'prenom' => get_post_meta($reservation_id, '_rp_prenom', true),
+                        'email' => get_post_meta($reservation_id, '_rp_email', true),
+                        'langue' => get_post_meta($reservation_id, '_rp_langue', true) == 'fr' ? 'Français' : 'Anglais',
+                        'adultes' => get_post_meta($reservation_id, '_rp_nb_adultes', true),
+                        'enfants' => get_post_meta($reservation_id, '_rp_nb_enfants', true),
                         'activite' => intval(get_post_meta($reservation_id, '_rp_activite_id', true)),
                     ];
 
@@ -225,7 +249,6 @@ function rp_handle_payment_processing()
                         // Rechercher le code promo dans le CPT
                         $promo_post = get_page_by_title($promo_code, OBJECT, 'promo_code');
 
-
                         if ($promo_post) {
                             // Récupérer le pourcentage de réduction
                             $discount_percentage = intval(get_post_meta($promo_post->ID, '_promo_percentage', true));
@@ -237,9 +260,37 @@ function rp_handle_payment_processing()
                             }
                         }
                     }
+
+                    $carte_cadeau = get_post_meta($reservation_id, '_rp_carte_cadeau', true); // Champ personnalisé dans la réservation
+                    if (!empty($carte_cadeau)) {
+                        $carte_cadeau_is_valid = false;
+                        $promo_query = new WP_Query([
+                            'post_type' => 'carte_cadeau',
+                            'title' => $carte_cadeau,
+                            'post_status' => 'publish',
+                            'posts_per_page' => 1,
+                        ]);
+
+                        if ($promo_query->have_posts()) {
+                            $gift = $promo_query->posts[0];
+                            $consumedCarteCadeau = floatval(get_post_meta($gift->ID, 'consumed', true));
+                            $totalCarteCadeau = floatval(get_post_meta($gift->ID, 'montant', true));
+                            $remainingToSub = max($totalCarteCadeau - $consumedCarteCadeau, 0);
+
+                            if ($remainingToSub > 0) {
+                                $total = min($total, $remainingToSub);
+                                $consumedCarteCadeau = update_post_meta($gift->ID, 'consumed', ($total + $consumedCarteCadeau));
+                                $total = max($total - $remainingToSub, 0);
+                            }
+                        }
+                    }
+
                     $total = max($total, 0);
 
-                    $subject_client = "Confirmation de votre réservation";
+
+                    $adresse = get_post_meta($reservation_data['activite'], '_rp_adresse_rdv', true);
+                    $pdf_enigme = get_post_meta($reservation_data['activite'], '_rp_pdf_enigme', true);
+                    $subject_client = "Info relatives à votre réservation (à lire en entier, svp !)";
                     $message_client = "
     Bonjour {$reservation_data['prenom']} {$reservation_data['nom']},
 
@@ -251,21 +302,27 @@ function rp_handle_payment_processing()
     - Nombre d'enfants : {$reservation_data['enfants']}
     - Langue : {$reservation_data['langue']}
     - Total : {$total}
+    - Lieux de rendez-vous : {$adresse}
     
-    Nous avons hâte de vous accueillir !
+    La partie se jouera à l’aide d’un téléphone portable, pensez à avoir de la batterie. Vous recevrez un code permettant de débloquer l’escape game deux heures avant le début de l'activité. 
+
+    En attendant, voici pour vous une première énigme en pièce jointe.
 
     Cordialement,
     L’équipe de Playgreen
 ";
+                    $attachments = [];
+                    if (!empty($pdf_enigme)) {
+                        $upload_dir = wp_upload_dir();
+                        $relative_path = str_replace($upload_dir['baseurl'], $upload_dir['basedir'], $pdf_enigme);
+                        if (file_exists($relative_path)) {
+                            $attachments[] = $relative_path;
+                        }
+                    }
+
+                    wp_mail($reservation_data['email'], $subject_client, $message_client, '', $attachments);
 
 
-
-
-
-
-
-
-                    wp_mail($reservation_data['email'], $subject_client, $message_client);
                     $admin_email = get_option('admin_email'); // Email de l'administrateur WordPress
                     $subject_admin = "Nouvelle réservation effectuée";
                     $message_admin = "
@@ -282,9 +339,7 @@ function rp_handle_payment_processing()
 
     Vous pouvez consulter la réservation dans l'administration WordPress.
 ";
-
                     wp_mail($admin_email, $subject_admin, $message_admin);
-
 
 
                     $thank_you_page_id = get_option('rp_thank_you_page', 0);

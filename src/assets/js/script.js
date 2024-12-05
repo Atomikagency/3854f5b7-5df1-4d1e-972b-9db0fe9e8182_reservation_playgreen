@@ -19,11 +19,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 numberPositive: "Veuillez sélectionner un montant",
             },
         },
-        add_message: { type: "boolean", convert: true },
         message: {
             type: "string",
-            optionnal: false,
-            empty: false,
+            optionnal: true,
+            empty: true,
             messages: {
                 stringEmpty: "Veuillez renseigner un message",
                 required: "Veuillez renseigner un message",
@@ -32,12 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
         email: {
             type: "email",
             optionnal: false,
+            empty: false,
             messages: {
                 email: "Veuillez renseigner une adresse email valide",
                 emailEmpty: "Veuillez renseigner votre adresse email",
             },
         },
-        send_direct: { type: "boolean", convert: true },
         emailSend: {
             type: "email",
             optionnal: false,
@@ -52,6 +51,24 @@ document.addEventListener("DOMContentLoaded", function () {
             convert: true,
             optionnal: false,
             messages: { required: "Veuillez accepter les conditions RGPD" },
+        },
+        from: {
+            type: "string",
+            optionnal: false,
+            empty: false,
+            messages: {
+                required: "Veuillez renseigner le nom du destinataire",
+                emailEmpty: "Veuillez renseigner le nom du destinataire",
+            },
+        },
+        to: {
+            type: "string",
+            optionnal: false,
+            empty: false,
+            messages: {
+                required: "Veuillez renseigner le nom du destinataire",
+                emailEmpty: "Veuillez renseigner le nom du destinataire",
+            },
         },
     };
 
@@ -110,26 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 customAmount.removeAttribute("data-filled");
             }
-        });
-
-        // Handle message visibility
-        const messageCheckbox = giftCardForm.querySelector('input[name="add_message"]');
-        const messageTextarea = giftCardForm.querySelector('textarea[name="message"]');
-
-        messageCheckbox.addEventListener("change", function () {
-            schema.message.empty = !this.checked;
-            schema.message.optionnal = !this.checked;
-            messageTextarea.style.display = this.checked ? "block" : "none";
-        });
-
-        // Handle emailSend visibility
-        const sendDirectCheckbox = giftCardForm.querySelector('input[name="send_direct"]');
-        const emailSendField = giftCardForm.querySelector('input[name="emailSend"]');
-
-        sendDirectCheckbox.addEventListener("change", function () {
-            schema.emailSend.empty = !this.checked;
-            schema.emailSend.optionnal = !this.checked;
-            emailSendField.style.display = this.checked ? "block" : "none";
         });
     }
 });

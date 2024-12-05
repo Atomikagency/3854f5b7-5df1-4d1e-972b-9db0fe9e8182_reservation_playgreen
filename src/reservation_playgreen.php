@@ -20,7 +20,7 @@ require_once 'vendor/autoload.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR . 'update-checker.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/category.shortcode.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/latest_article.shortcode.php';
-require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gift_card.shortcode.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR . 'includes/gitf_card/gift_card.shortcode.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/code_promo.cpt.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/admin/settings.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/activity.cpt.php';
@@ -33,6 +33,9 @@ require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/admin/stripe_connect.ph
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/price.ajax.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/activity_metadata.shortcode.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/activity_listing.shortcode.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gitf_card/gift_card.cpt.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gitf_card/stripe.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gitf_card/gift_meta.shortcode.php';
 
 
 
