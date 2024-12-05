@@ -175,6 +175,7 @@ function rp_gift_handle_payment_processing()
                     // PUT all data from gift_id ( load also metadata )
                     $data = [
                         'gift_id' => $gift_id,
+                        'code' => get_the_title($gift_id),
                         'buyer_email' => get_post_meta($gift_id, 'email', true),
                         'recipient_email' => get_post_meta($gift_id, 'emailSend', true),
                         'message' => get_post_meta($gift_id, 'message', true),
@@ -256,8 +257,30 @@ function generate_pdf_from_fpdi($data)
 function createCoordonnates($data)
 {
     $coords = [];
-    //exemple
-    $coords[] = ['x' => 90, 'y' => 39, 'text' => 'Test'];
+    switch ($data['theme']) {
+        case '1':
+            $coords[] = ['x' => 63, 'y' => 82, 'text' => $data['to']];
+            $coords[] = ['x' => 56, 'y' => 94, 'text' => $data['from']];
+            $coords[] = ['x' => 125, 'y' => 94, 'text' => $data['code']];
+            break;
+
+        case '2':
+            $coords[] = ['x' => 55, 'y' => 76.5, 'text' => $data['to']];
+            $coords[] = ['x' => 50, 'y' => 95, 'text' => $data['from']];
+            $coords[] = ['x' => 55, 'y' => 114, 'text' => $data['code']];
+            break;
+
+        case '3':
+            $coords[] = ['x' => 78, 'y' => 87, 'text' => $data['to']];
+            $coords[] = ['x' => 73, 'y' => 99, 'text' => $data['from']];
+            $coords[] = ['x' => 82, 'y' => 121, 'text' => $data['code']];
+            $coords[] = ['x' => 86, 'y' => 110, 'text' => $data['montant'] . ' euros'];
+            break;
+        
+        default:
+            # code...
+            break;
+    }
 
     return $coords;
 }
@@ -274,7 +297,7 @@ function add_content_to_pdf($coordinates = [], $theme = '1')
     $tplIdx = $pdf->importPage(1);
     $pdf->AddPage();
     $pdf->useTemplate($tplIdx);
-    $pdf = debugGrid($pdf);
+    //$pdf = debugGrid($pdf);
 
     foreach ($coordinates as $coord) {
         add_text_to_coord($pdf, $coord['text'], $coord);
@@ -287,7 +310,7 @@ function add_text_to_coord($pdf, $text, $coord)
 {
     $x = $coord['x'];
     $y = $coord['y'];
-    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->SetFont('Arial', 'B', 12);
     $pdf->SetTextColor(0, 0, 0);
     $pdf->Text($x + 2, $y - 2, utf8_decode($text));
 }
