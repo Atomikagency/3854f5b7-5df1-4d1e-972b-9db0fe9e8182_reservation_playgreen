@@ -50,7 +50,9 @@ function rp_render_activity_details_meta_box($post) {
         'prix_adulte'     => get_post_meta($post->ID, '_rp_prix_adulte', true),
         'prix_enfant'     => get_post_meta($post->ID, '_rp_prix_enfant', true),
         'stripe_connect'  => get_post_meta($post->ID, '_rp_stripe_connect', true),
-    ];
+        'adresse_rdv'  => get_post_meta($post->ID, '_rp_adresse_rdv', true),
+        'pdf_enigme'    => get_post_meta($post->ID, '_rp_pdf_enigme', true),
+        ];
 
     $hours = get_post_meta($post->ID, '_rp_hours', true) ?: [];
     $days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
@@ -106,6 +108,28 @@ function rp_render_activity_details_meta_box($post) {
         <tr>
             <th><label for="rp_prix_enfant">Prix Enfant (€)</label></th>
             <td><input type="number" name="rp_prix_enfant" id="rp_prix_enfant" value="<?php echo esc_attr($fields['prix_enfant']); ?>" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <th><label for="rp_adresse_rdv">Adresse de RDV</label></th>
+            <td>
+                <input type="text" name="rp_adresse_rdv" id="rp_adresse_rdv" value="<?php echo esc_attr($fields['adresse_rdv']); ?>" style="width: 100%;">
+                <small>Cette adresse apparaitra dans le mail après réservation</small>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="rp_pdf_enigme">PDF Enigme 0</label></th>
+            <td>
+                <?php
+                $pdf_field = 'rp_pdf_enigme';
+                $pdf_value = get_post_meta($post->ID, "_rp_pdf_enigme", true);
+                $filename = basename($pdf_value);
+                ?>
+                <input type="hidden" name="rp_pdf_enigme" id="rp_pdf_enigme" value="<?php echo esc_attr($fields['pdf_enigme']); ?>">
+                <p id="title-<?php echo $pdf_field ?>"><?php echo $filename ?></p>
+                <button type="button" class="button rp-upload-button" data-target="#rp_pdf_enigme">Télécharger</button>
+                <button type="button" class="button rp-remove-button" data-target="#<?php echo $pdf_field; ?>">Supprimer</button>
+                <small>Charger un fichier PDF pour l'énigme 0 - Sera transmis dans le mail après réservation</small>
+            </td>
         </tr>
         <tr>
             <th><label for="rp_stripe_connect">Stripe Connect ID (optionnel)</label></th>
@@ -177,7 +201,7 @@ function rp_render_activity_details_meta_box($post) {
 function rp_save_activity_meta($post_id) {
     $fields = [
         'note', 'lieu', 'nb_personne', 'duree', 'langue_fr', 'langue_en',
-        'photo_1', 'photo_2', 'photo_3', 'photo_4', 'prix_adulte', 'prix_enfant', 'stripe_connect'
+        'photo_1', 'photo_2', 'photo_3', 'photo_4', 'prix_adulte', 'prix_enfant', 'stripe_connect','adresse_rdv','pdf_enigme'
     ];
 
     foreach ($fields as $field) {

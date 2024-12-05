@@ -23,14 +23,11 @@ function rp_calculer_total_paiement() {
         wp_send_json_error(['message' => 'Activité ou prix introuvable.'], 404);
     }
 
-    // Calculer le total sans réduction
     $total_without_discount = max(0, ($nb_adulte * $prix_adulte) + ($nb_enfant * $prix_enfant));
 
-    // Initialiser la réduction
     $discount = 0;
     $discount_is_valid = false;
 
-    // Vérifier le code promo
     if ($code_promo) {
         $promo_query = new WP_Query([
             'post_type' => 'promo_code',
@@ -46,10 +43,8 @@ function rp_calculer_total_paiement() {
         }
     }
 
-    // Calculer le total avec réduction
     $total = $discount_is_valid ? $total_without_discount * (1 - $discount) : $total_without_discount;
 
-    // Formatter les totaux avec number_format
     $total = number_format($total, 2, '.', '');
     $total_without_discount = number_format($total_without_discount, 2, '.', '');
 
@@ -75,8 +70,6 @@ function rp_calculer_total_paiement() {
         }
     }
 
-
-    // Envoyer les résultats en JSON
     wp_send_json_success([
         'total' => $total,
         'total_without_discount' => $total_without_discount,

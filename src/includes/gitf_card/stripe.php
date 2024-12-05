@@ -189,8 +189,7 @@ function rp_gift_handle_payment_processing()
                     send_gift_card_to_recipient($data, $pdf_content);
                     send_gift_card_to_buyer($data, $pdf_content);
 
-
-                    wp_redirect(site_url('/carte-cadeau-felicitation'));
+                    wp_redirect(add_query_arg('gift_id', $gift_id, '/carte-cadeau-felicitation'));
 
                 } else {
                     wp_die('Carte cadeau invalide.');

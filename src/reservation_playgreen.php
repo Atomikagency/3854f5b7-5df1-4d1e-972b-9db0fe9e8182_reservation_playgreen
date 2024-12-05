@@ -35,6 +35,7 @@ require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/activity_metadata.short
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/activity_listing.shortcode.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gitf_card/gift_card.cpt.php';
 require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gitf_card/stripe.php';
+require_once RESERVATION_PLAYGREEN_PLUGIN_DIR. 'includes/gitf_card/gift_meta.shortcode.php';
 
 
 
