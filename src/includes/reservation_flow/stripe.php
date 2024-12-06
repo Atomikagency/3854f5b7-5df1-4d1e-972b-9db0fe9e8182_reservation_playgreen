@@ -106,6 +106,23 @@ function rp_handle_payment_request()
 
                 $total_amount = max($total_amount, 0);
 
+                $taxRate = get_option('_rp_stripe_tax_rate_id');
+                if (empty($taxRate)) {
+                    $tax_rate = \Stripe\TaxRate::create([
+                        'display_name' => 'TVA',
+                        'percentage' => 10.0,
+                        'inclusive' => true,
+                        'country' => 'FR', // Pays de la TVA
+                        'jurisdiction' => 'FR', // Juridiction
+                        'description' => 'TVA incluse',
+                    ]);
+
+                    // Sauvegarder l'ID du taux de taxe dans les options WordPress
+                    update_option('_rp_stripe_tax_rate_id', $tax_rate->id);
+                    $taxRate = $tax_rate->id;
+                }
+
+
                 $application_fee_amount = 0; // Frais pour la plateforme en centimes
                 $transfer_data = []; // Données pour le compte Stripe Connect
                 $params = [
@@ -117,21 +134,36 @@ function rp_handle_payment_request()
                                 'name' => 'Réservation Activité #' . $reservation_data['activite'],
                             ],
                             'unit_amount' => $total_amount * 100, // Montant en centimes
+                            'tax_behavior' => 'inclusive'
                         ],
                         'quantity' => 1,
+                        'tax_rates' => [$taxRate]
                     ]],
                     'mode' => 'payment',
                     'success_url' => site_url('/process-payment') . '?session_id={CHECKOUT_SESSION_ID}&reservation_id=' . $reservation_id, // Redirection intermédiaire
                     'cancel_url' => site_url('/recapitulatif') . '?reservation_id=' . $reservation_id,
-                    'customer_email' => get_post_meta($reservation_id, '_rp_email', true),
                     'metadata' => [
                         'reservation_id' => $reservation_id, // Inclure l'ID de réservation
                     ],
                     'invoice_creation' => [
                         'enabled' => true,
                     ],
-
+                    'billing_address_collection' => 'required'
                 ];
+
+
+                $enterprise = get_post_meta($reservation_id, '_rp_enterprise_name', true);
+                if (!empty($enterprise)) {
+                    $customer_data = [
+                        'email' => get_post_meta($reservation_id, '_rp_email', true),
+                        'name' => $enterprise,
+                    ];
+                    $customer = \Stripe\Customer::create($customer_data);
+                    $params['customer'] = $customer->id;
+                } else {
+                    $params['customer_email'] = get_post_meta($reservation_id, '_rp_email', true);
+                }
+
                 if (!empty($stripe_connect_id) && $commission_percentage > 0) {
                     $application_fee_amount = (($total_amount * 100) * $commission_percentage) / 100;
 

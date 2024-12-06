@@ -64,7 +64,21 @@ function rp_gift_handle_payment_request()
             } else {
                 wp_die('Erreur lors de la reservation de carte cadeau');
             }
+            $taxRate = get_option('_rp_stripe_tax_rate_id');
+            if(empty($taxRate)){
+                $tax_rate = \Stripe\TaxRate::create([
+                    'display_name' => 'TVA',
+                    'percentage' => 10.0,
+                    'inclusive' => true,
+                    'country' => 'FR', // Pays de la TVA
+                    'jurisdiction' => 'FR', // Juridiction
+                    'description' => 'TVA incluse',
+                ]);
 
+                // Sauvegarder l'ID du taux de taxe dans les options WordPress
+                update_option('_rp_stripe_tax_rate_id', $tax_rate->id);
+                $taxRate = $tax_rate->id;
+            }
 
             $params = [
                 'payment_method_types' => ['card'],
@@ -75,8 +89,10 @@ function rp_gift_handle_payment_request()
                             'name' => 'Carte cadeau #' . $gift_id,
                         ],
                         'unit_amount' => $montant * 100,
+                        'tax_behavior' => 'inclusive',
                     ],
                     'quantity' => 1,
+                    'tax_rates' => [$taxRate],
                 ]],
                 'mode' => 'payment',
                 'success_url' => site_url('/process-payment-gift-post-stripe') . '?session_id={CHECKOUT_SESSION_ID}&gift_id=' . $gift_id, // Redirection intermédiaire
@@ -88,8 +104,8 @@ function rp_gift_handle_payment_request()
                 'invoice_creation' => [
                     'enabled' => true,
                 ],
-
-            ];
+                'billing_address_collection' => 'auto',
+                ];
             try {
                 $session = \Stripe\Checkout\Session::create($params);
                 wp_redirect($session->url);

@@ -46,6 +46,7 @@ function rp_render_reservation_meta_box($post) {
         'state'           => get_post_meta($post->ID, '_rp_state', true),
         'code_promo' => get_post_meta($post->ID, '_rp_code_promo', true),
         'carte_cadeau' => get_post_meta($post->ID, '_rp_carte_cadeau', true),
+        'entreprise_name' => get_post_meta($post->ID, '_rp_enterprise_name', true),
     ];
 
     $activites = get_posts([
@@ -91,12 +92,7 @@ function rp_render_reservation_meta_box($post) {
         </tr>
         <tr>
             <th><label for="rp_langue">Langue</label></th>
-            <td>
-                <select name="rp_langue" id="rp_langue" style="width: 100%;">
-                    <option value="fr" <?php selected($fields['langue'], 'fr'); ?>>Français</option>
-                    <option value="en" <?php selected($fields['langue'], 'en'); ?>>Anglais</option>
-                </select>
-            </td>
+            <td><input type="text" name="rp_langue" id="rp_langue" value="<?php echo esc_attr($fields['langue']); ?>" style="width: 100%;"></td>
         </tr>
         <tr>
             <th><label for="rp_nb_adultes">Nombre d'adultes</label></th>
@@ -123,6 +119,10 @@ function rp_render_reservation_meta_box($post) {
             <td><input type="text" name="rp_carte_cadeau" id="rp_carte_cadeau" value="<?php echo esc_attr($fields['carte_cadeau']); ?>" style="width: 100%;"></td>
         </tr>
         <tr>
+            <th><label for="rp_enterprise_name">Entreprise</label></th>
+            <td><input type="text" name="rp_enterprise_name" id="rp_enterprise_name" value="<?php echo esc_attr($fields['entreprise_name']); ?>" style="width: 100%;"></td>
+        </tr>
+        <tr>
             <th><label for="rp_is_paid">Paiement reçu</label></th>
             <td>
                 <select name="rp_is_paid" id="rp_is_paid" style="width: 100%;">
@@ -143,7 +143,7 @@ function rp_render_reservation_meta_box($post) {
 function rp_save_reservation_meta($post_id) {
     $fields = [
         'activite_id', 'email', 'nom', 'prenom', 'langue',
-        'nb_adultes', 'nb_enfants', 'date', 'heure', 'is_paid', 'stripe_charge_id', 'state', 'carte_cadeau'
+        'nb_adultes', 'nb_enfants', 'date', 'heure', 'is_paid', 'stripe_charge_id', 'state', 'carte_cadeau','entreprise_name'
     ];
 
     foreach ($fields as $field) {

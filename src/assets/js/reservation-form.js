@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
         reservation_enfants: { type: "number", optionnal: true, convert: true },
         reservation_code_promo: { type: "string", optionnal: true },
         reservation_carte_cadeau: { type: "string", optionnal: true },
-        reservation_cgv: { type: "boolean", convert: true },
+        enterprise_name: { type: "string", optionnal: true },
     };
 
     const check = v.compile(schema);
@@ -173,8 +173,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             return;
         } else {
-            // isValidated = true;
-            // form.submit();
+            isValidated = true;
+            form.submit();
         }
     }
 

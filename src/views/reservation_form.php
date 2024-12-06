@@ -60,6 +60,11 @@
             <label for="reservation-cc">Carte cadeau</label>
             <input type="text" id="reservation-cc" name="reservation_carte_cadeau" >
 
+            <div id="ask_entreprise">
+                <label for="enterprise-name">Nom de l'entreprise (optionnel)</label>
+                <input type="text" id="enterprise-name" name="enterprise_name" >
+            </div>
+
             <div style="display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px;">
                 <input type="checkbox" id="reservation-cgv" name="reservation_cgv" required>
                 <label for="reservation-cgv">
