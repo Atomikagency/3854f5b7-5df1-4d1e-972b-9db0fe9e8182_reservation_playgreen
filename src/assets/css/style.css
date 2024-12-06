@@ -219,6 +219,40 @@
     width: 20px;
 }
 
+.rp-activity-listing {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.rp-activity-listing-container input,.rp-activity-listing-container select {
+    padding: 10px !important;
+    width: 100%;
+    font-size: 16px;
+    border: 1px solid var(--input-border-color) !important;
+    border-radius: 4px;
+}
+
+.rp-activity-listing-container #filters {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:20px;
+    padding: 25px 0;
+}
+.rp-activity-listing-container #filters #applyFilters{
+    display: inline-block;
+    isolation: isolate;
+    position: relative;
+    border-width: 0px !important;
+    border-radius: 100vmax;
+    font-size: 17px;
+    color: #ffffff !important;
+    padding: 7px 17px;
+    background-color: #8b9279;
+    overflow: hidden;
+    cursor: pointer;
+}
+
 /* Activity metadata */
 
 .activity-metadata {
@@ -295,6 +329,7 @@
     height: 42px;
     border: 1px solid black;
 }
+
 .gift_card_form input[type="email"] {
     display: block;
     border-radius: 5px;
@@ -350,6 +385,7 @@
     top: -200%;
     left: -200%;
 }
+
 .gift_card_form .montant_container label {
     cursor: pointer;
     display: flex;
