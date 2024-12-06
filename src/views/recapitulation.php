@@ -4,12 +4,7 @@
             <img src="<?php echo esc_url($reservation_data['activite_thumbnail']); ?>" alt="<?php echo esc_html($reservation_data['activite_data']->post_title); ?>" style="width: 100%; border-radius: 20px;">
             <div>
                 <h3 style="margin-bottom: 20px; font-weight: 600;"><?php echo esc_html($reservation_data['activite_data']->post_title); ?></h3>
-                <?php
-                    $duration = explode('.', $reservation_data['activite_duration']);
-                    $hours = $duration[0];
-                    $minutes = $duration[1] ?? 0;
-                ?>
-                <p><strong>Durée :</strong> <?php echo esc_html($hours) . "h"; ?><?php if($minutes > 0) { echo esc_html($minutes) . "m"; } ?></p>
+                <p><strong>Durée :</strong> <?php echo esc_html($$reservation_data['activite_duration']); ?></p>
                 <p><strong>Nom :</strong> <?php echo esc_html($reservation_data['nom']); ?></p>
                 <p><strong>Prénom :</strong> <?php echo esc_html($reservation_data['prenom']); ?></p>
                 <p><strong>Email :</strong> <?php echo esc_html($reservation_data['email']); ?></p>

@@ -292,6 +292,13 @@ function createCoordonnates($data)
             $coords[] = ['x' => 82, 'y' => 121, 'text' => $data['code']];
             $coords[] = ['x' => 86, 'y' => 110, 'text' => $data['montant'] . ' euros'];
             break;
+
+        case '4':
+            $coords[] = ['x' => 65, 'y' => 76.5, 'text' => $data['to']];
+            $coords[] = ['x' => 71, 'y' => 85, 'text' => $data['from']];
+            $coords[] = ['x' => 77, 'y' => 93.5, 'text' => $data['montant'] . ' euros'];
+            $coords[] = ['x' => 75, 'y' => 102, 'text' => $data['code']];
+            break;
         
         default:
             # code...
@@ -313,11 +320,14 @@ function add_content_to_pdf($coordinates = [], $theme = '1')
     $tplIdx = $pdf->importPage(1);
     $pdf->AddPage();
     $pdf->useTemplate($tplIdx);
-    //$pdf = debugGrid($pdf);
+    // $pdf = debugGrid($pdf);
 
     foreach ($coordinates as $coord) {
         add_text_to_coord($pdf, $coord['text'], $coord);
     }
+
+    // $pdf->Output('I');
+    // die();
 
     return $pdf->Output('S'); // 'I' outputs to the browser
 }
