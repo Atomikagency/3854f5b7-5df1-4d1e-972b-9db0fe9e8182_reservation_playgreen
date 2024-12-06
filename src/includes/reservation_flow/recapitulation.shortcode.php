@@ -6,6 +6,7 @@ function rp_reservation_recap_shortcode($atts)
     if (isset($_GET['reservation_id'])) {
         $reservation_id = intval($_GET['reservation_id']);
 
+
         // Vérifier si l'ID est valide et correspond au CPT "reservation"
         if (get_post_type($reservation_id) === 'reservation') {
             $reservation_data = [

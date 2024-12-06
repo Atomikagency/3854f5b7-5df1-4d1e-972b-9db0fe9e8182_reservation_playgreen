@@ -27,7 +27,8 @@ function rp_reservation_button_shortcode()
 add_shortcode('reservation_button', 'rp_reservation_button_shortcode');
 
 
-function rp_reservation_form_shortcode() {
+function rp_reservation_form_shortcode()
+{
     // Récupérer l'ID de l'activité depuis l'URL
     $activite_id = isset($_GET['activite_id']) ? intval($_GET['activite_id']) : null;
     // Vérifier que l'ID de l'activité est valide
@@ -42,40 +43,45 @@ function rp_reservation_form_shortcode() {
 
         // Récupérer les données du formulaire
         $reservation_data = [
-            'date'      => sanitize_text_field($_POST['reservation_date']),
-            'heure'     => sanitize_text_field($_POST['reservation_time']),
-            'nom'       => sanitize_text_field($_POST['reservation_nom']),
-            'prenom'    => sanitize_text_field($_POST['reservation_prenom']),
-            'email'     => sanitize_email($_POST['reservation_email']),
-            'langue'    => sanitize_text_field($_POST['reservation_langue']),
-            'adultes'   => intval($_POST['reservation_adultes']),
-            'enfants'   => intval($_POST['reservation_enfants']),
-            'activite'  => $activite_id,
+            'date' => sanitize_text_field($_POST['reservation_date']),
+            'heure' => sanitize_text_field($_POST['reservation_time']),
+            'nom' => sanitize_text_field($_POST['reservation_nom']),
+            'prenom' => sanitize_text_field($_POST['reservation_prenom']),
+            'email' => sanitize_email($_POST['reservation_email']),
+            'langue_fr' => sanitize_text_field($_POST['reservation_francais']),
+            'langue_en' => sanitize_text_field($_POST['reservation_anglais']),
+            'adultes' => intval($_POST['reservation_adultes']),
+            'enfants' => intval($_POST['reservation_enfants']),
+            'activite' => $activite_id,
             'code_promo' => sanitize_text_field($_POST['reservation_code_promo']),
-            'carte_cadeau' => sanitize_text_field($_POST['reservation_carte_cadeau'])
+            'carte_cadeau' => sanitize_text_field($_POST['reservation_carte_cadeau']),
+            'enterprise_name' => sanitize_text_field($_POST['enterprise_name']),
         ];
+
 
         // Créer un nouveau post pour la réservation
         $reservation_id = wp_insert_post([
-            'post_type'   => 'reservation',
+            'post_type' => 'reservation',
             'post_status' => 'publish', // Statut "publish" pour le rendre visible dans l'admin
-            'post_title'  => 'Réservation - ' . $reservation_data['nom'] . ' ' . $reservation_data['prenom'],
+            'post_title' => 'Réservation - ' . $reservation_data['nom'] . ' ' . $reservation_data['prenom'],
         ]);
 
         // Si la création est réussie, ajouter les métadonnées
         if ($reservation_id) {
+            $lang = (!empty($reservation_data['langue_fr']) ? 'Français' : '').' '.(!empty($reservation_data['langue_en']) ? 'Anglais' : '');
             update_post_meta($reservation_id, '_rp_date', $reservation_data['date']);
             update_post_meta($reservation_id, '_rp_heure', $reservation_data['heure']);
             update_post_meta($reservation_id, '_rp_nom', $reservation_data['nom']);
             update_post_meta($reservation_id, '_rp_prenom', $reservation_data['prenom']);
             update_post_meta($reservation_id, '_rp_email', $reservation_data['email']);
-            update_post_meta($reservation_id, '_rp_langue', $reservation_data['langue']);
+            update_post_meta($reservation_id, '_rp_langue', $lang);
             update_post_meta($reservation_id, '_rp_nb_adultes', $reservation_data['adultes']);
             update_post_meta($reservation_id, '_rp_nb_enfants', $reservation_data['enfants']);
             update_post_meta($reservation_id, '_rp_activite_id', $reservation_data['activite']);
             update_post_meta($reservation_id, '_rp_state', 'in_progress'); // Statut par défaut "in progress"
             update_post_meta($reservation_id, '_rp_code_promo', $reservation_data['code_promo']);
             update_post_meta($reservation_id, '_rp_carte_cadeau', $reservation_data['carte_cadeau']);
+            update_post_meta($reservation_id, '_rp_enterprise_name', $reservation_data['enterprise_name']);
 
             $recap_page_id = get_option('rp_recap_page');
             if ($recap_page_id) {
@@ -95,16 +101,16 @@ function rp_reservation_form_shortcode() {
 
     // Récupérer les métadonnées de l'activité
     $activity_meta = [
-        'langue_fr'    => get_post_meta($activite_id, '_rp_langue_fr', true),
-        'langue_en'    => get_post_meta($activite_id, '_rp_langue_en', true),
-        'prix_adulte'  => get_post_meta($activite_id, '_rp_prix_adulte', true),
-        'prix_enfant'  => get_post_meta($activite_id, '_rp_prix_enfant', true),
-        'horaire'      => get_post_meta($activite_id, '_rp_hours', true),
-        'thumbnail'    => get_the_post_thumbnail_url($activite_id, 'full'),
-        'duree'        => get_post_meta($activite_id, '_rp_duree', true),
-        'note'         => get_post_meta($activite_id, '_rp_note', true),
-        'resumé'       => get_the_excerpt($activite_id),
-        'activite'  => $activite_id,
+        'langue_fr' => get_post_meta($activite_id, '_rp_langue_fr', true),
+        'langue_en' => get_post_meta($activite_id, '_rp_langue_en', true),
+        'prix_adulte' => get_post_meta($activite_id, '_rp_prix_adulte', true),
+        'prix_enfant' => get_post_meta($activite_id, '_rp_prix_enfant', true),
+        'horaire' => get_post_meta($activite_id, '_rp_hours', true),
+        'thumbnail' => get_the_post_thumbnail_url($activite_id, 'full'),
+        'duree' => get_post_meta($activite_id, '_rp_duree', true),
+        'note' => get_post_meta($activite_id, '_rp_note', true),
+        'resumé' => get_the_excerpt($activite_id),
+        'activite' => $activite_id,
     ];
 
     ob_start();
@@ -116,5 +122,6 @@ function rp_reservation_form_shortcode() {
     }
     return ob_get_clean();
 }
+
 add_shortcode('reservation_form', 'rp_reservation_form_shortcode');
 
