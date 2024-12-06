@@ -48,10 +48,10 @@
             </div>
 
             <!-- Nombre de personnes -->
-            <label for="reservation-adultes">Nombre d'adultes (<?php echo esc_html($activity_meta['prix_adulte']); ?>€ par adulte)</label>
+            <label for="reservation-adultes">Nombre d'adultes (<?php echo esc_html($activity_meta['prix_adulte']); ?>€ TTC par adulte)</label>
             <input type="number" id="reservation-adultes" name="reservation_adultes" min="0" value="0" required>
 
-            <label for="reservation-enfants">Nombre de jeunes (<?php echo esc_html($activity_meta['prix_enfant']); ?>€ par jeune) <sup style="font-size: 12px;">1</sup></label>
+            <label for="reservation-enfants">Nombre de jeunes (<?php echo esc_html($activity_meta['prix_enfant']); ?>€ TTC par jeune) <sup style="font-size: 12px;">1</sup></label>
             <input type="number" id="reservation-enfants" name="reservation_enfants" min="0" value="0" required>
 
             <label for="reservation-cp">Code promo</label>
@@ -81,17 +81,12 @@
     <div class="reservation-form-right" style="flex: 1; background-color: #f9f9f9; padding: 20px; border-radius: 25px;">
         <img src="<?php echo esc_url($activity_meta['thumbnail']); ?>" alt="<?php echo esc_html(get_the_title($activite_id)); ?>" style="width: 100%; border-radius: 20px;">
         <h3><?php echo esc_html(get_the_title($activite_id)); ?></h3>
-        <?php
-            $duration = explode('.', $activity_meta['duree']);
-            $hours = $duration[0];
-            $minutes = $duration[1] ?? 0;
-        ?>
-        <p><strong>Durée :</strong> <?php echo esc_html($hours) . "h"; ?><?php if($minutes > 0) { echo esc_html($minutes) . "m"; } ?></p>
-        <p><strong>Note :</strong> <?php echo esc_html($activity_meta['note']); ?>/5</p>
+        <p><strong>Durée :</strong> <?php echo esc_html($activity_meta['duree']); ?></p>
+        <!-- <p><strong>Note :</strong> <?php echo esc_html($activity_meta['note']); ?>/5</p> -->
         <p><?php echo esc_html($activity_meta['resumé']); ?></p>
         <div class="reservation-form-price">
-            <p class="reservation-form-price-total">Total: <span id="price-with-discount">0.00</span> €</p>
-            <p class="reservation-form-price-without-discount"><span id="price-without-discount">0.00</span> €</p>
+            <p class="reservation-form-price-total">Total: <span id="price-with-discount">0.00</span> € TTC</p>
+            <p class="reservation-form-price-without-discount"><span id="price-without-discount">0.00</span> € TTC</p>
         </div>
     </div>
 </div>

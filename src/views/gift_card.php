@@ -33,6 +33,10 @@
             <input type="radio" name="theme" value="3">
             <img src="/wp-content/uploads/2024/12/gift-card-theme-3.png" alt="Thème 3">
         </label>
+        <label>
+            <input type="radio" name="theme" value="4">
+            <img src="/wp-content/uploads/2024/12/gift-card-theme-4.png" alt="Thème 4">
+        </label>
     </div>
 
     <!-- Montant -->
@@ -58,6 +62,7 @@
         </label>
         <input type="hidden" name="montant" value="">
     </div>
+    <small>Tous les prix sont en TTC</small>
 
     <h3 style="font-size: 23px; font-weight: 700; margin-bottom: 10px; margin-top: 60px;">Contenu de la carte cadeau</h3>
 

@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
         theme: {
             type: "enum",
             optionnal: false,
-            values: ["1", "2", "3"],
+            values: ["1", "2", "3", "4"],
             messages: {
                 required: "Veuillez sélectionner un thème",
             },
