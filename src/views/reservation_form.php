@@ -64,6 +64,10 @@
                 <label for="enterprise-name">Nom de l'entreprise (optionnel)</label>
                 <input type="text" id="enterprise-name" name="enterprise_name" >
             </div>
+            <div id="reservation-message">
+                <label for="message">Message (optionnel)</label>
+                <textarea name="message" id="message" ></textarea>
+            </div>
 
             <div style="display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px;">
                 <input type="checkbox" id="reservation-cgv" name="reservation_cgv" required>

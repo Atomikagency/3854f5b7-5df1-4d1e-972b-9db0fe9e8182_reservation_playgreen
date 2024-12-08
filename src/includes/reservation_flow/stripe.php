@@ -268,6 +268,7 @@ function rp_handle_payment_processing()
                         'adultes' => get_post_meta($reservation_id, '_rp_nb_adultes', true),
                         'enfants' => get_post_meta($reservation_id, '_rp_nb_enfants', true),
                         'activite' => intval(get_post_meta($reservation_id, '_rp_activite_id', true)),
+                        'message' => get_post_meta($reservation_id,'_rp_message',true)
                     ];
 
                     $prix_adulte = floatval(get_post_meta($reservation_data['activite'], '_rp_prix_adulte', true));
@@ -368,6 +369,7 @@ function rp_handle_payment_processing()
     - Nombre d'enfants : {$reservation_data['enfants']}
     - Langue : {$reservation_data['langue']}
     - Total : {$total}
+    - Message : {$reservation_data['message']}
 
     Vous pouvez consulter la réservation dans l'administration WordPress.
 ";
