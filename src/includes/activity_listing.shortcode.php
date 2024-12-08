@@ -5,6 +5,7 @@ add_shortcode('rp_activity_listing', 'rp_activity_listing_shortcode');
 function rp_activity_listing_shortcode($atts) {
     $atts = shortcode_atts(array(
         'nb_item' => '',
+        'filter' => false,
     ), $atts, 'rp_activity_listing');
 
     $args = array(

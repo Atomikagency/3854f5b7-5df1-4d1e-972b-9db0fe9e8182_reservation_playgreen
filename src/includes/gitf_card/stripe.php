@@ -36,6 +36,7 @@ function rp_gift_handle_payment_request()
             $from = sanitize_text_field($_POST['from'] ?? '');
             $to = sanitize_text_field($_POST['to'] ?? '');
             $message = sanitize_textarea_field($_POST['message'] ?? '');
+            $enterprise = sanitize_text_field($_POST['entreprise'] ?? '');
 
             if (empty($theme) || empty($montant) || empty($email) || empty($from) || empty($to) || empty($emailSend)) {
                 echo '<p>Veuillez remplir tous les champs obligatoires et accepter les conditions RGPD.</p>';
@@ -60,12 +61,13 @@ function rp_gift_handle_payment_request()
                 update_post_meta($gift_id, 'from', $from);
                 update_post_meta($gift_id, 'to', $to);
                 update_post_meta($gift_id, 'message', $message);
+                update_post_meta($gift_id, 'entreprise', $enterprise);
                 update_post_meta($gift_id, 'state', 'En cours');
             } else {
                 wp_die('Erreur lors de la reservation de carte cadeau');
             }
             $taxRate = get_option('_rp_stripe_tax_rate_id');
-            if(empty($taxRate)){
+            if (empty($taxRate)) {
                 $tax_rate = \Stripe\TaxRate::create([
                     'display_name' => 'TVA',
                     'percentage' => 10.0,
@@ -97,7 +99,6 @@ function rp_gift_handle_payment_request()
                 'mode' => 'payment',
                 'success_url' => site_url('/process-payment-gift-post-stripe') . '?session_id={CHECKOUT_SESSION_ID}&gift_id=' . $gift_id, // Redirection intermédiaire
                 'cancel_url' => site_url('/carte-cadeau'),
-                'customer_email' => $email,
                 'metadata' => [
                     'gift_id' => $gift_id,
                 ],
@@ -105,7 +106,20 @@ function rp_gift_handle_payment_request()
                     'enabled' => true,
                 ],
                 'billing_address_collection' => 'auto',
+            ];
+
+            if (!empty($enterprise)) {
+                $customer_data = [
+                    'email' => $email,
+                    'name' => $enterprise,
                 ];
+                $customer = \Stripe\Customer::create($customer_data);
+                $params['customer'] = $customer->id;
+            } else {
+                $params['customer_email'] = $email;
+            }
+
+
             try {
                 $session = \Stripe\Checkout\Session::create($params);
                 wp_redirect($session->url);
@@ -220,15 +234,17 @@ function rp_gift_handle_payment_processing()
         }
     }
 }
+
 add_action('template_redirect', 'rp_gift_handle_payment_processing');
 
-function send_gift_purchase_notification_email($data){
-        $to = 'contact@playgreen-paris.com';
-        $subject = 'Nouvelle carte cadeau achetée';
-        $body = 'Une nouvelle carte cadeau a été achetée. Détails : ' . print_r($data, true);
-        $headers = ['Content-Type: text/html; charset=UTF-8'];
+function send_gift_purchase_notification_email($data)
+{
+    $to = 'contact@playgreen-paris.com';
+    $subject = 'Nouvelle carte cadeau achetée';
+    $body = 'Une nouvelle carte cadeau a été achetée. Détails : ' . print_r($data, true);
+    $headers = ['Content-Type: text/html; charset=UTF-8'];
 
-        wp_mail($to, $subject, nl2br($body), $headers);
+    wp_mail($to, $subject, nl2br($body), $headers);
 }
 
 function send_gift_card_to_buyer($data, $pdf_content)
@@ -242,7 +258,7 @@ function send_gift_card_to_buyer($data, $pdf_content)
 
     if (!$attachments['error']) {
         wp_mail($to, $subject, nl2br($body), $headers, [$attachments['file']]);
-    }else{
+    } else {
         echo '<pre>';
         var_dump($attachments);
         echo '</pre>';
@@ -299,7 +315,7 @@ function createCoordonnates($data)
             $coords[] = ['x' => 77, 'y' => 93.5, 'text' => $data['montant'] . ' euros'];
             $coords[] = ['x' => 75, 'y' => 102, 'text' => $data['code']];
             break;
-        
+
         default:
             # code...
             break;

@@ -72,8 +72,18 @@
     margin-bottom: 5px;
 }
 
+.reservation-form-container .reservation-form-left #reservation-form input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+}
+
+.reservation-form-container .reservation-form-left #reservation-form textarea {
+    resize: vertical;
+}
+
 .reservation-form-container .reservation-form-left #reservation-form input,
-.reservation-form-container .reservation-form-left #reservation-form select {
+.reservation-form-container .reservation-form-left #reservation-form select,
+.reservation-form-container .reservation-form-left #reservation-form textarea {
     padding: 10px;
     width: 100%;
     font-size: 16px;
@@ -163,7 +173,7 @@
 .rp-activity-listing {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 50px;
 }
 
 @media screen and (min-width: 800px) {
@@ -425,4 +435,32 @@
     background-color: #8b9279;
     color: #fff;
     border-color: #fff;
+}
+
+#rp-activity-filter-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 15px 0;
+}
+#rp-activity-filter-form select {
+    display: block;
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px 10px;
+    height: 42px;
+    border: 1px solid black;
+}
+#rp-activity-filter-form button {
+    display: inline-block;
+    isolation: isolate;
+    position: relative;
+    border-width: 0px !important;
+    border-radius: 100vmax;
+    font-size: 17px;
+    color: #ffffff !important;
+    padding: 7px 17px;
+    background-color: #8b9279;
+    overflow: hidden;
+    cursor: pointer;
 }

@@ -46,6 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 email: "Veuillez renseigner une adresse email de destinataire valide",
             },
         },
+        entreprise: {
+            type: "text",
+            optionnal: true,
+        },
         rgpd: {
             type: "boolean",
             convert: true,

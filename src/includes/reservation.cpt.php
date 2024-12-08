@@ -47,6 +47,7 @@ function rp_render_reservation_meta_box($post) {
         'code_promo' => get_post_meta($post->ID, '_rp_code_promo', true),
         'carte_cadeau' => get_post_meta($post->ID, '_rp_carte_cadeau', true),
         'entreprise_name' => get_post_meta($post->ID, '_rp_enterprise_name', true),
+        'message' => get_post_meta($post->ID, '_rp_message', true),
     ];
 
     $activites = get_posts([
@@ -123,6 +124,10 @@ function rp_render_reservation_meta_box($post) {
             <td><input type="text" name="rp_enterprise_name" id="rp_enterprise_name" value="<?php echo esc_attr($fields['entreprise_name']); ?>" style="width: 100%;"></td>
         </tr>
         <tr>
+            <th><label for="rp_message">Message</label></th>
+            <td><input type="text" name="rp_message" id="rp_message" value="<?php echo esc_attr($fields['message']); ?>" style="width: 100%;"></td>
+        </tr>
+        <tr>
             <th><label for="rp_is_paid">Paiement reçu</label></th>
             <td>
                 <select name="rp_is_paid" id="rp_is_paid" style="width: 100%;">
@@ -143,7 +148,8 @@ function rp_render_reservation_meta_box($post) {
 function rp_save_reservation_meta($post_id) {
     $fields = [
         'activite_id', 'email', 'nom', 'prenom', 'langue',
-        'nb_adultes', 'nb_enfants', 'date', 'heure', 'is_paid', 'stripe_charge_id', 'state', 'carte_cadeau','entreprise_name'
+        'nb_adultes', 'nb_enfants', 'date', 'heure', 'is_paid', 'stripe_charge_id', 'state', 'carte_cadeau',
+        'entreprise_name','message'
     ];
 
     foreach ($fields as $field) {

@@ -2,19 +2,19 @@
 
 function register_gift_card_cpt() {
     $labels = array(
-        'name'                  => _x('Cartes Cadeaux', 'Post Type General Name', 'text_domain'),
-        'singular_name'         => _x('Carte Cadeau', 'Post Type Singular Name', 'text_domain'),
-        'menu_name'             => __('Cartes Cadeaux', 'text_domain'),
-        'name_admin_bar'        => __('Carte Cadeau', 'text_domain'),
-        'add_new_item'          => __('Ajouter une nouvelle Carte Cadeau', 'text_domain'),
-        'edit_item'             => __('Modifier la Carte Cadeau', 'text_domain'),
-        'view_item'             => __('Voir la Carte Cadeau', 'text_domain'),
-        'all_items'             => __('Toutes les Cartes Cadeaux', 'text_domain'),
-        'search_items'          => __('Rechercher des Cartes Cadeaux', 'text_domain'),
+        'name'                  => _x('Cartes Cadeaux', 'Post Type General Name', 'reservation_playgreen'),
+        'singular_name'         => _x('Carte Cadeau', 'Post Type Singular Name', 'reservation_playgreen'),
+        'menu_name'             => __('Cartes Cadeaux', 'reservation_playgreen'),
+        'name_admin_bar'        => __('Carte Cadeau', 'reservation_playgreen'),
+        'add_new_item'          => __('Ajouter une nouvelle Carte Cadeau', 'reservation_playgreen'),
+        'edit_item'             => __('Modifier la Carte Cadeau', 'reservation_playgreen'),
+        'view_item'             => __('Voir la Carte Cadeau', 'reservation_playgreen'),
+        'all_items'             => __('Toutes les Cartes Cadeaux', 'reservation_playgreen'),
+        'search_items'          => __('Rechercher des Cartes Cadeaux', 'reservation_playgreen'),
     );
 
     $args = array(
-        'label'                 => __('Carte Cadeau', 'text_domain'),
+        'label'                 => __('Carte Cadeau', 'reservation_playgreen'),
         'labels'                => $labels,
         'supports'              => array('title', 'custom-fields'),
         'public'                => false,
@@ -36,7 +36,7 @@ add_action('init', 'register_gift_card_cpt');
 function gift_card_add_meta_box() {
     add_meta_box(
         'gift_card_meta_box',
-        __('Détails de la Carte Cadeau', 'text_domain'),
+        __('Détails de la Carte Cadeau', 'reservation_playgreen'),
         'gift_card_meta_box_callback',
         'carte_cadeau'
     );
@@ -47,16 +47,17 @@ function gift_card_meta_box_callback($post) {
     wp_nonce_field('save_gift_card_meta', 'gift_card_meta_nonce');
 
     $fields = [
-        'email' => __('Email', 'text_domain'),
-        'emailSend' => __('Email de Réception', 'text_domain'),
-        'theme' => __('Thème', 'text_domain'),
-        'montant' => __('Montant', 'text_domain'),
-        'from' => __('De', 'text_domain'),
-        'to' => __('Pour', 'text_domain'),
-        'message' => __('Message', 'text_domain'),
-        'state' => __('Statut', 'text_domain'),
-        'stripe_payment_id' => __('ID de Paiement Stripe', 'text_domain'),
-        'consumed' => __('Montant consummé', 'text_domain'),
+        'email' => __('Email', 'reservation_playgreen'),
+        'emailSend' => __('Email de Réception', 'reservation_playgreen'),
+        'theme' => __('Thème', 'reservation_playgreen'),
+        'montant' => __('Montant', 'reservation_playgreen'),
+        'from' => __('De', 'reservation_playgreen'),
+        'to' => __('Pour', 'reservation_playgreen'),
+        'message' => __('Message', 'reservation_playgreen'),
+        'state' => __('Statut', 'reservation_playgreen'),
+        'stripe_payment_id' => __('ID de Paiement Stripe', 'reservation_playgreen'),
+        'consumed' => __('Montant consummé', 'reservation_playgreen'),
+        'entreprise' => __('Entreprise', 'reservation_playgreen')
     ];
 
     foreach ($fields as $field => $label) {
@@ -97,7 +98,8 @@ function save_gift_card_meta($post_id) {
         'message' => 'sanitize_textarea_field',
         'state' => 'sanitize_text_field',
         'stripe_payment_id' => 'sanitize_text_field',
-        'consumed' => 'sanitize_text_field'
+        'consumed' => 'sanitize_text_field',
+        'entreprise' => 'sanitize_text_field'
     ];
 
     foreach ($fields as $field => $sanitizer) {
@@ -111,9 +113,9 @@ add_action('save_post', 'save_gift_card_meta');
 // Add Custom Columns for Admin List View
 function gift_card_custom_columns($columns) {
     unset($columns['date']);
-    $columns['montant'] = __('Montant', 'text_domain');
-    $columns['montant_consumed'] = __('Montant Consommé', 'text_domain');
-    $columns['state'] = __('Statut', 'text_domain');
+    $columns['montant'] = __('Montant', 'reservation_playgreen');
+    $columns['montant_consumed'] = __('Montant Consommé', 'reservation_playgreen');
+    $columns['state'] = __('Statut', 'reservation_playgreen');
     return $columns;
 }
 add_filter('manage_carte_cadeau_posts_columns', 'gift_card_custom_columns');

@@ -45,6 +45,9 @@
                         <label for="reservation_anglais">Anglais</label>
                     </div>
                 <?php endif; ?>
+                <?php if ($activity_meta['langue_fr'] && $activity_meta['langue_en']) : ?>
+                    <small>Vous pouvez choisir plusieurs langues</small>
+                <?php endif; ?>
             </div>
 
             <!-- Nombre de personnes -->
@@ -64,6 +67,10 @@
                 <label for="enterprise-name">Nom de l'entreprise (optionnel)</label>
                 <input type="text" id="enterprise-name" name="enterprise_name" >
             </div>
+            <div id="reservation-message">
+                <label for="message">Message (optionnel)</label>
+                <textarea name="message" id="message" ></textarea>
+            </div>
 
             <div style="display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px;">
                 <input type="checkbox" id="reservation-cgv" name="reservation_cgv" required>
@@ -77,8 +84,8 @@
 
             <!-- Soumettre -->
             <button type="submit" class="button reservation-button" name="form_reservation_submit" id="reservation-submit" style="padding: 12px 35px; width: 100%;">Réserver</button>
-            <p style="margin-top: 20px; color: #000; font-weight: 500;">Vous êtes une entreprise ? Vous pourrez saisir vos informations au moment du paiement.</p>
-            <p style="color: #000; font-weight: 500;">1: Jeunes de 3 à 17 ans - Gratuit pour les moins de 3 ans</p>
+            <!-- <p style="margin-top: 20px; color: #000; font-weight: 500;">Vous êtes une entreprise ? Vous pourrez saisir vos informations au moment du paiement.</p> -->
+            <p style="margin-top: 20px; color: #000; font-weight: 500;">1: Jeunes de 3 à 17 ans - Gratuit pour les moins de 3 ans</p>
         </form>
     </div>
 

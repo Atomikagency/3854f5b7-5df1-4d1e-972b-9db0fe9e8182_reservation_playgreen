@@ -56,6 +56,7 @@ function rp_reservation_form_shortcode()
             'code_promo' => sanitize_text_field($_POST['reservation_code_promo']),
             'carte_cadeau' => sanitize_text_field($_POST['reservation_carte_cadeau']),
             'enterprise_name' => sanitize_text_field($_POST['enterprise_name']),
+            'message' => sanitize_text_field($_POST['message']),
         ];
 
 
@@ -82,6 +83,7 @@ function rp_reservation_form_shortcode()
             update_post_meta($reservation_id, '_rp_code_promo', $reservation_data['code_promo']);
             update_post_meta($reservation_id, '_rp_carte_cadeau', $reservation_data['carte_cadeau']);
             update_post_meta($reservation_id, '_rp_enterprise_name', $reservation_data['enterprise_name']);
+            update_post_meta($reservation_id, '_rp_message', $reservation_data['message']);
 
             $recap_page_id = get_option('rp_recap_page');
             if ($recap_page_id) {
