@@ -20,6 +20,32 @@ function rp_register_activity_cpt() {
 }
 add_action('init', 'rp_register_activity_cpt');
 
+function rp_register_ville_taxonomy() {
+    $args = array(
+        'labels' => array(
+            'name'              => 'Villes',
+            'singular_name'     => 'Ville',
+            'search_items'      => 'Rechercher des villes',
+            'all_items'         => 'Toutes les villes',
+            'parent_item'       => 'Ville parente',
+            'parent_item_colon' => 'Ville parente :',
+            'edit_item'         => 'Éditer la ville',
+            'update_item'       => 'Mettre à jour la ville',
+            'add_new_item'      => 'Ajouter une nouvelle ville',
+            'new_item_name'     => 'Nom de la nouvelle ville',
+            'menu_name'         => 'Villes',
+        ),
+        'hierarchical'      => true,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array('slug' => 'ville'),
+    );
+
+    register_taxonomy('ville', 'activite', $args);
+}
+add_action('init', 'rp_register_ville_taxonomy');
+
 // Ajouter les champs personnalisés via des meta boxes
 function rp_add_activity_meta_boxes() {
     add_meta_box(
@@ -52,6 +78,7 @@ function rp_render_activity_details_meta_box($post) {
         'stripe_connect'  => get_post_meta($post->ID, '_rp_stripe_connect', true),
         'adresse_rdv'  => get_post_meta($post->ID, '_rp_adresse_rdv', true),
         'pdf_enigme'    => get_post_meta($post->ID, '_rp_pdf_enigme', true),
+        'age' => get_post_meta($post->ID, '_rp_age', true),
         ];
 
     $hours = get_post_meta($post->ID, '_rp_hours', true) ?: [];
@@ -114,6 +141,17 @@ function rp_render_activity_details_meta_box($post) {
             <td>
                 <input type="text" name="rp_adresse_rdv" id="rp_adresse_rdv" value="<?php echo esc_attr($fields['adresse_rdv']); ?>" style="width: 100%;">
                 <small>Cette adresse apparaitra dans le mail après réservation</small>
+            </td>
+        </tr>
+
+        <tr>
+            <th><label for="rp_age">Age</label></th>
+            <td>
+                <select name="rp_age" id="rp_age">
+                    <option>Choisissez un age</option>
+                    <option value="adulte" <?php echo !empty($fields['age']) && $fields['age'] == 'adulte'  ? 'selected' :'' ?>>Adulte</option>
+                    <option value="enfant" <?php echo !empty($fields['age']) && $fields['age'] == 'enfant'  ? 'selected' :'' ?>>Enfant</option>
+                </select>
             </td>
         </tr>
         <tr>
@@ -201,7 +239,7 @@ function rp_render_activity_details_meta_box($post) {
 function rp_save_activity_meta($post_id) {
     $fields = [
         'note', 'lieu', 'nb_personne', 'duree', 'langue_fr', 'langue_en',
-        'photo_1', 'photo_2', 'photo_3', 'photo_4', 'prix_adulte', 'prix_enfant', 'stripe_connect','adresse_rdv','pdf_enigme'
+        'photo_1', 'photo_2', 'photo_3', 'photo_4', 'prix_adulte', 'prix_enfant', 'stripe_connect','adresse_rdv','pdf_enigme','age'
     ];
 
     foreach ($fields as $field) {
