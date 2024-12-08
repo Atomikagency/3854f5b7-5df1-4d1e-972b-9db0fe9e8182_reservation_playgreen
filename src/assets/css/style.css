@@ -72,8 +72,18 @@
     margin-bottom: 5px;
 }
 
+.reservation-form-container .reservation-form-left #reservation-form input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+}
+
+.reservation-form-container .reservation-form-left #reservation-form textarea {
+    resize: vertical;
+}
+
 .reservation-form-container .reservation-form-left #reservation-form input,
-.reservation-form-container .reservation-form-left #reservation-form select {
+.reservation-form-container .reservation-form-left #reservation-form select,
+.reservation-form-container .reservation-form-left #reservation-form textarea {
     padding: 10px;
     width: 100%;
     font-size: 16px;
@@ -163,7 +173,7 @@
 .rp-activity-listing {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 50px;
 }
 
 @media screen and (min-width: 800px) {
@@ -427,14 +437,13 @@
     border-color: #fff;
 }
 
-
 #rp-activity-filter-form {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
-margin:15px 0;
+    margin: 15px 0;
 }
-#rp-activity-filter-form select{
+#rp-activity-filter-form select {
     display: block;
     border-radius: 5px;
     width: 100%;

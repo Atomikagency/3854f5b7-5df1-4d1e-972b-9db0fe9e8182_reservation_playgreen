@@ -45,6 +45,9 @@
                         <label for="reservation_anglais">Anglais</label>
                     </div>
                 <?php endif; ?>
+                <?php if ($activity_meta['langue_fr'] && $activity_meta['langue_en']) : ?>
+                    <small>Vous pouvez choisir plusieurs langues</small>
+                <?php endif; ?>
             </div>
 
             <!-- Nombre de personnes -->
