@@ -143,7 +143,6 @@ function rp_render_activity_details_meta_box($post) {
                 <small>Cette adresse apparaitra dans le mail après réservation</small>
             </td>
         </tr>
-
         <tr>
             <th><label for="rp_age">Age</label></th>
             <td>
