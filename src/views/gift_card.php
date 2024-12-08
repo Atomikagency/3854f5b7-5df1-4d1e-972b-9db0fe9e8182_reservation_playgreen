@@ -17,6 +17,11 @@
             <small>Adresse email qui recevera la carte cadeau</small>
         </div>
     </div>
+    <div>
+        <p class="gift_card_section_title">Entreprise (optionnel)</p>
+        <input type="text" name="entreprise" placeholder="Entreprise" >
+        <small>Adresse email qui recevera la carte cadeau</small>
+    </div>
 
     <!-- Thèmes -->
     <p class="gift_card_section_title">Choisissez votre thème</p>
