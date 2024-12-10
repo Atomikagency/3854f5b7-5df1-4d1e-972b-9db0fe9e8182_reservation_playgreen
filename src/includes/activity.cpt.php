@@ -46,6 +46,32 @@ function rp_register_ville_taxonomy() {
 }
 add_action('init', 'rp_register_ville_taxonomy');
 
+function rp_register_category_taxonomy() {
+    $args = array(
+        'labels' => array(
+            'name'              => 'Categories',
+            'singular_name'     => 'Categorie',
+            'search_items'      => 'Rechercher des Categories',
+            'all_items'         => 'Toutes les Categories',
+            'parent_item'       => 'Categorie parente',
+            'parent_item_colon' => 'Categorie parente :',
+            'edit_item'         => 'Éditer la Categorie',
+            'update_item'       => 'Mettre à jour la Categorie',
+            'add_new_item'      => 'Ajouter une nouvelle Categorie',
+            'new_item_name'     => 'Nom de la nouvelle Categorie',
+            'menu_name'         => 'Categories',
+        ),
+        'hierarchical'      => true,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array('slug' => 'category_activity'),
+    );
+
+    register_taxonomy('category_activity', 'activite', $args);
+}
+add_action('init', 'rp_register_category_taxonomy');
+
 // Ajouter les champs personnalisés via des meta boxes
 function rp_add_activity_meta_boxes() {
     add_meta_box(
@@ -61,7 +87,6 @@ add_action('add_meta_boxes', 'rp_add_activity_meta_boxes');
 
 // Rendu de la meta box
 function rp_render_activity_details_meta_box($post) {
-    // Récupération des valeurs existantes
     $fields = [
         'note'            => get_post_meta($post->ID, '_rp_note', true),
         'lieu'            => get_post_meta($post->ID, '_rp_lieu', true),

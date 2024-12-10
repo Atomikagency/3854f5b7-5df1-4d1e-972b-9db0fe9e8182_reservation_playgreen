@@ -22,6 +22,18 @@ if(!empty($atts['filter']) && $atts['filter'] == true ){
     echo '<option value="enfant">Enfant</option>';
     echo '</select>';
 
+    // Filtre par catégorie
+    echo '<select id="rp-filter-category" name="category_activity">';
+    echo '<option value="">Toutes les catégories</option>';
+    $categories = get_terms(array(
+        'taxonomy' => 'category_activity',
+        'hide_empty' => true,
+    ));
+    foreach ($categories as $category) {
+        echo '<option value="' . esc_attr($category->slug) . '">' . esc_html($category->name) . '</option>';
+    }
+    echo '</select>';
+
     echo '<button type="button" id="rp-filter-button">Filtrer</button>';
     echo '</form>';
     echo '</div>';
@@ -43,9 +55,12 @@ while ($query->have_posts()) {
     $langue_en = get_post_meta(get_the_ID(), '_rp_langue_en', true);
     $ville = wp_get_post_terms(get_the_ID(), 'ville');
     $ville = !empty($ville) && $ville[0] ? $ville[0]->slug : '';
+
+    $category = wp_get_post_terms(get_the_ID(), 'category_activity');
+    $category_slugs = !empty($categories) ? implode(',', wp_list_pluck($categories, 'slug')) : '';
     $permalink = get_permalink();
 
-    echo '<a href="'. $permalink .'" class="rp-activity-item" data-ville="'. esc_attr($ville) .'" data-age="'. esc_attr($age) .'">';
+    echo '<a href="'. $permalink .'" class="rp-activity-item" data-ville="'. esc_attr($ville) .'" data-category="'.esc_attr($category_slugs).'" data-age="'. esc_attr($age) .'">';
     echo '<div class="rp-activity-image">' . get_the_post_thumbnail(get_the_ID(), 'full') . '</div>';
     echo '<h3 class="rp-activity-title">' . get_the_title() . '</h3>';
     echo '<p class="rp-activity-price">à partir de <span>' . esc_html($prix_min) . ' €</span> TTC</p>';
@@ -64,23 +79,26 @@ wp_reset_postdata();
     document.getElementById('rp-filter-button').addEventListener('click', function() {
         const villeFilter = document.getElementById('rp-filter-ville').value;
         const ageFilter = document.getElementById('rp-filter-age').value;
+        const categoryFilter = document.getElementById('rp-filter-category').value;
 
         const activities = document.querySelectorAll('.rp-activity-item');
 
         activities.forEach(activity => {
             const activityVille = activity.getAttribute('data-ville');
             const activityAge = activity.getAttribute('data-age');
-
-            console.log(activityVille);
+            const activityCategories = activity.getAttribute('data-category').split(',');
 
             let villeMatch = !villeFilter || activityVille === villeFilter;
             let ageMatch = !ageFilter || activityAge === ageFilter;
+            let categoryMatch = !categoryFilter || activityCategories.includes(categoryFilter);
 
-            if (villeMatch && ageMatch) {
+            if (villeMatch && ageMatch && categoryMatch) {
                 activity.style.display = '';
             } else {
                 activity.style.display = 'none';
             }
         });
     });
+
 </script>
+
