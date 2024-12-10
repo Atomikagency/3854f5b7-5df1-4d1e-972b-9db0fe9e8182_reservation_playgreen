@@ -57,7 +57,8 @@ while ($query->have_posts()) {
     $ville = !empty($ville) && $ville[0] ? $ville[0]->slug : '';
 
     $category = wp_get_post_terms(get_the_ID(), 'category_activity');
-    $category_slugs = !empty($categories) ? implode(',', wp_list_pluck($categories, 'slug')) : '';
+    $category_slugs = !empty($category) ? implode(',', wp_list_pluck($category, 'slug')) : '';
+
     $permalink = get_permalink();
 
     echo '<a href="'. $permalink .'" class="rp-activity-item" data-ville="'. esc_attr($ville) .'" data-category="'.esc_attr($category_slugs).'" data-age="'. esc_attr($age) .'">';

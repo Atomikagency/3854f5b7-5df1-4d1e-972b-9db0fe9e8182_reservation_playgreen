@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         },
         entreprise: {
-            type: "text",
+            type: "string",
             optionnal: true,
         },
         rgpd: {
