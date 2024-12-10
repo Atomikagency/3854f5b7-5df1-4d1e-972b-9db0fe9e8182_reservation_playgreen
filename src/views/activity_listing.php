@@ -3,7 +3,7 @@ if(!empty($atts['filter']) && $atts['filter'] == true ){
     echo '<div class="rp-activity-filter">';
     echo '<form id="rp-activity-filter-form">';
     echo '<select id="rp-filter-ville" name="ville">';
-    echo '<option value="">Toutes les villes</option>';
+    echo '<option value="">Paris/Lyon</option>';
 
     // Récupérer les termes de la taxonomie "ville"
     $villes = get_terms(array(
@@ -17,14 +17,14 @@ if(!empty($atts['filter']) && $atts['filter'] == true ){
     echo '</select>';
 
     echo '<select id="rp-filter-age" name="age">';
-    echo '<option value="">Tous les âges</option>';
+    echo '<option value="">Adulte/Enfant</option>';
     echo '<option value="adulte">Adulte</option>';
     echo '<option value="enfant">Enfant</option>';
     echo '</select>';
 
     // Filtre par catégorie
     echo '<select id="rp-filter-category" name="category_activity">';
-    echo '<option value="">Toutes les catégories</option>';
+    echo '<option value="">Categories</option>';
     $categories = get_terms(array(
         'taxonomy' => 'category_activity',
         'hide_empty' => true,
