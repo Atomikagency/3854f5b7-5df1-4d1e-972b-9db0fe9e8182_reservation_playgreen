@@ -61,7 +61,7 @@ while ($query->have_posts()) {
 
     $permalink = get_permalink();
 
-    echo '<a href="'. $permalink .'" class="rp-activity-item" data-ville="'. esc_attr($ville) .'" data-category="'.esc_attr($category_slugs).'" data-age="'. esc_attr($age) .'">';
+    echo '<a href="'. $permalink .'" class="rp-activity-item" data-activity-id="'. get_the_ID() .'" data-ville="'. esc_attr($ville) .'" data-category="'.esc_attr($category_slugs).'" data-age="'. esc_attr($age) .'">';
     echo '<div class="rp-activity-image">' . get_the_post_thumbnail(get_the_ID(), 'full') . '</div>';
     echo '<h3 class="rp-activity-title">' . get_the_title() . '</h3>';
     echo '<p class="rp-activity-price">à partir de <span>' . esc_html($prix_min) . ' €</span> TTC</p>';

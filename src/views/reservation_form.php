@@ -46,7 +46,7 @@
                     </div>
                 <?php endif; ?>
                 <?php if ($activity_meta['langue_fr'] && $activity_meta['langue_en']) : ?>
-                    <small>Vous pouvez choisir plusieurs langues</small>
+                    <small>Vous pouvez choisir plusieurs langues si vous souhaitez jouer en bilingue</small>
                 <?php endif; ?>
             </div>
 

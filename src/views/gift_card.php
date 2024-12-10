@@ -17,11 +17,6 @@
             <small>Adresse email qui recevera la carte cadeau</small>
         </div>
     </div>
-    <div>
-        <p class="gift_card_section_title">Entreprise (optionnel)</p>
-        <input type="text" name="entreprise" placeholder="Entreprise" >
-        <small>Adresse email qui recevera la carte cadeau</small>
-    </div>
 
     <!-- Thèmes -->
     <p class="gift_card_section_title">Choisissez votre thème</p>
@@ -31,21 +26,21 @@
             <img src="/wp-content/uploads/2024/12/gift-card-theme-1.png" alt="Thème 1">
         </label>
         <label>
-            <input type="radio" name="theme" value="2">
-            <img src="/wp-content/uploads/2024/12/gift-card-theme-2.png" alt="Thème 2">
+            <input type="radio" name="theme" value="4">
+            <img src="/wp-content/uploads/2024/12/gift-card-theme-4.png" alt="Thème 4">
         </label>
         <label>
             <input type="radio" name="theme" value="3">
             <img src="/wp-content/uploads/2024/12/gift-card-theme-3.png" alt="Thème 3">
         </label>
         <label>
-            <input type="radio" name="theme" value="4">
-            <img src="/wp-content/uploads/2024/12/gift-card-theme-4.png" alt="Thème 4">
+            <input type="radio" name="theme" value="2">
+            <img src="/wp-content/uploads/2024/12/gift-card-theme-2.png" alt="Thème 2">
         </label>
     </div>
 
     <!-- Montant -->
-    <div class="montant_container">
+    <div class="montant_container" style="margin-bottom: 10px;">
         <p class="gift_card_section_title">Choisissez un montant</p>
         <label>
             <input type="radio" name="preset_amount" value="50"> 50 €
@@ -68,6 +63,10 @@
         <input type="hidden" name="montant" value="">
     </div>
     <small>Tous les prix sont en TTC</small>
+    <div style="margin-top: 20px;">
+        <p class="gift_card_section_title">Entreprise (optionnel)</p>
+        <input type="text" name="entreprise" placeholder="Entreprise" >
+    </div>
 
     <h3 style="font-size: 23px; font-weight: 700; margin-bottom: 10px; margin-top: 60px;">Contenu de la carte cadeau</h3>
 
