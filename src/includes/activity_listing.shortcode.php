@@ -11,8 +11,7 @@ function rp_activity_listing_shortcode($atts) {
     $args = array(
         'post_type'      => 'activite',
         'posts_per_page' => $atts['nb_item'] ? intval($atts['nb_item']) : -1,
-        'orderby'        => 'title',
-        'order'          => 'ASC',
+        'orderby'          => 'rand',
     );
 
     $query = new WP_Query($args);
