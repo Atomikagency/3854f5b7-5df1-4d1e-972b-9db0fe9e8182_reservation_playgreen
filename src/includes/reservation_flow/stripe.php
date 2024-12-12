@@ -356,7 +356,7 @@ function rp_handle_payment_processing()
                     wp_mail($reservation_data['email'], $subject_client, $message_client, '', $attachments);
 
 
-                    $admin_email = get_option('admin_email'); // Email de l'administrateur WordPress
+                    $admin_email = 'contact@playgreen-paris.com';
                     $subject_admin = "Nouvelle réservation effectuée";
                     $message_admin = "
     Une nouvelle réservation a été effectuée. Voici les détails :
