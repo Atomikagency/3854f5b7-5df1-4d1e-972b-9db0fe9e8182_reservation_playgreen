@@ -17,9 +17,9 @@ if(!empty($atts['filter']) && $atts['filter'] == true ){
     echo '</select>';
 
     echo '<select id="rp-filter-age" name="age">';
-    echo '<option value="">Adulte/Enfant</option>';
-    echo '<option value="adulte">Adulte</option>';
-    echo '<option value="enfant">Enfant</option>';
+    echo '<option value="">Adultes/Enfants</option>';
+    echo '<option value="adulte">Adultes</option>';
+    echo '<option value="enfant">Enfants</option>';
     echo '</select>';
 
     // Filtre par catégorie

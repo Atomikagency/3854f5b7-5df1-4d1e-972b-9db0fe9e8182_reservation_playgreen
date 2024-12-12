@@ -339,19 +339,17 @@ function rp_handle_payment_processing()
     
     La partie se jouera à l’aide d’un téléphone portable, pensez à avoir de la batterie. Vous recevrez un code permettant de débloquer l’escape game deux heures avant le début de l'activité. 
 
-    En attendant, voici pour vous une première énigme en pièce jointe.
-
     Cordialement,
     L’équipe de Playgreen
 ";
                     $attachments = [];
-                    if (!empty($pdf_enigme)) {
-                        $upload_dir = wp_upload_dir();
-                        $relative_path = str_replace($upload_dir['baseurl'], $upload_dir['basedir'], $pdf_enigme);
-                        if (file_exists($relative_path)) {
-                            $attachments[] = $relative_path;
-                        }
-                    }
+//                    if (!empty($pdf_enigme)) {
+//                        $upload_dir = wp_upload_dir();
+//                        $relative_path = str_replace($upload_dir['baseurl'], $upload_dir['basedir'], $pdf_enigme);
+//                        if (file_exists($relative_path)) {
+//                            $attachments[] = $relative_path;
+//                        }
+//                    }
 
                     wp_mail($reservation_data['email'], $subject_client, $message_client, '', $attachments);
 
