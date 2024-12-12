@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Reservation playgreen
  * Description: Module de reservation sur mesure by AtomikAgency
- * Version: 1.0.24
+ * Version: 1.0.25
  * Author: AtomikAgency
  * Author URI: https://atomikagency.fr/
  */
