@@ -106,9 +106,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 const slots = availableDates[dayName];
                 timeSlotSelect.innerHTML = "";
 
+                // Heure actuelle
+                const now = new Date();
+                const currentTime = now.getTime();
+
                 for (const [time, status] of Object.entries(slots)) {
                     if (status === "on") {
-                        timeSlotSelect.innerHTML += `<option value="${time}">${time}</option>`;
+
+                    console.log(time)
+                    const [hours, minutes] = time.split("h").map(Number);
+                    const slotDate = new Date(selectedDate);
+                    slotDate.setHours(hours, minutes, 0, 0);
+                        if (slotDate.getTime() > currentTime + 4 * 60 * 60 * 1000) {
+                            timeSlotSelect.innerHTML += `<option value="${time}">${time}</option>`;
+                        }
                     }
                 }
 
