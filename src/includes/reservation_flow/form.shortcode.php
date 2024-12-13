@@ -48,6 +48,7 @@ function rp_reservation_form_shortcode()
             'nom' => sanitize_text_field($_POST['reservation_nom']),
             'prenom' => sanitize_text_field($_POST['reservation_prenom']),
             'email' => sanitize_email($_POST['reservation_email']),
+            'tel' => sanitize_text_field($_POST['reservation_tel']),
             'langue_fr' => sanitize_text_field($_POST['reservation_francais']),
             'langue_en' => sanitize_text_field($_POST['reservation_anglais']),
             'adultes' => intval($_POST['reservation_adultes']),
@@ -75,6 +76,7 @@ function rp_reservation_form_shortcode()
             update_post_meta($reservation_id, '_rp_nom', $reservation_data['nom']);
             update_post_meta($reservation_id, '_rp_prenom', $reservation_data['prenom']);
             update_post_meta($reservation_id, '_rp_email', $reservation_data['email']);
+            update_post_meta($reservation_id, '_rp_tel', $reservation_data['tel']);
             update_post_meta($reservation_id, '_rp_langue', $lang);
             update_post_meta($reservation_id, '_rp_nb_adultes', $reservation_data['adultes']);
             update_post_meta($reservation_id, '_rp_nb_enfants', $reservation_data['enfants']);

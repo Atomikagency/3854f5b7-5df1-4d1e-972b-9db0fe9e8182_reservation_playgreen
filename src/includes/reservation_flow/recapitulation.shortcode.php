@@ -16,6 +16,7 @@ function rp_reservation_recap_shortcode($atts)
                 'nom' => get_post_meta($reservation_id, '_rp_nom', true),
                 'prenom' => get_post_meta($reservation_id, '_rp_prenom', true),
                 'email' => get_post_meta($reservation_id, '_rp_email', true),
+                'tel' => get_post_meta($reservation_id, '_rp_tel', true),
                 'langue' => get_post_meta($reservation_id, '_rp_langue', true),
                 'adultes' => get_post_meta($reservation_id, '_rp_nb_adultes', true),
                 'enfants' => get_post_meta($reservation_id, '_rp_nb_enfants', true),
