@@ -264,6 +264,7 @@ function rp_handle_payment_processing()
                         'nom' => get_post_meta($reservation_id, '_rp_nom', true),
                         'prenom' => get_post_meta($reservation_id, '_rp_prenom', true),
                         'email' => get_post_meta($reservation_id, '_rp_email', true),
+                        'tel' => get_post_meta($reservation_id, '_rp_tel', true),
                         'langue' => get_post_meta($reservation_id, '_rp_langue', true) == 'fr' ? 'Français' : 'Anglais',
                         'adultes' => get_post_meta($reservation_id, '_rp_nb_adultes', true),
                         'enfants' => get_post_meta($reservation_id, '_rp_nb_enfants', true),
@@ -361,6 +362,7 @@ function rp_handle_payment_processing()
 
     - Nom : {$reservation_data['prenom']} {$reservation_data['nom']}
     - Email : {$reservation_data['email']}
+    - Numéro de téléphone : {$reservation_data['tel']}
     - Date : {$reservation_data['date']}
     - Heure : {$reservation_data['heure']}
     - Nombre d'adultes : {$reservation_data['adultes']}

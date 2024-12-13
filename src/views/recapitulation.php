@@ -8,6 +8,7 @@
                 <p><strong>Nom :</strong> <?php echo esc_html($reservation_data['nom']); ?></p>
                 <p><strong>Prénom :</strong> <?php echo esc_html($reservation_data['prenom']); ?></p>
                 <p><strong>Email :</strong> <?php echo esc_html($reservation_data['email']); ?></p>
+                <p><strong>Numéro de téléphone :</strong> <?php echo esc_html($reservation_data['tel']); ?></p>
                 <p><strong>Date :</strong> <?php echo esc_html($reservation_data['date']); ?></p>
                 <p><strong>Heure :</strong> <?php echo esc_html($reservation_data['heure']); ?></p>
                 <p><strong>Nombre d'adultes :</strong> <?php echo intval($reservation_data['adultes']); ?></p>
