@@ -34,6 +34,7 @@ function rp_render_reservation_meta_box($post) {
     $fields = [
         'activite_id'     => get_post_meta($post->ID, '_rp_activite_id', true),
         'email'           => get_post_meta($post->ID, '_rp_email', true),
+        'tel'             => get_post_meta($post->ID, '_rp_tel', true),
         'nom'             => get_post_meta($post->ID, '_rp_nom', true),
         'prenom'          => get_post_meta($post->ID, '_rp_prenom', true),
         'langue'          => get_post_meta($post->ID, '_rp_langue', true),
@@ -82,6 +83,10 @@ function rp_render_reservation_meta_box($post) {
         <tr>
             <th><label for="rp_email">Email</label></th>
             <td><input type="email" name="rp_email" id="rp_email" value="<?php echo esc_attr($fields['email']); ?>" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <th><label for="rp_tel">Numéro de téléphone</label></th>
+            <td><input type="text" name="rp_tel" id="rp_tel" value="<?php echo esc_attr($fields['tel']); ?>" style="width: 100%;"></td>
         </tr>
         <tr>
             <th><label for="rp_nom">Nom</label></th>
@@ -149,7 +154,7 @@ function rp_save_reservation_meta($post_id) {
     $fields = [
         'activite_id', 'email', 'nom', 'prenom', 'langue',
         'nb_adultes', 'nb_enfants', 'date', 'heure', 'is_paid', 'stripe_charge_id', 'state', 'carte_cadeau',
-        'entreprise_name','message'
+        'entreprise_name','message','tel'
     ];
 
     foreach ($fields as $field) {

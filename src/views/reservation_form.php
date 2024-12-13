@@ -30,6 +30,9 @@
             <label for="reservation-email">Email *</label>
             <input type="email" id="reservation-email" name="reservation_email" required>
 
+            <label for="reservation-tel">Numéro de téléphone *</label>
+            <input type="text" id="reservation-tel" name="reservation_tel" required>
+
             <!-- Langue -->
             <p style="font-weight: 600; font-size: 16px; margin-top: 20px; margin-bottom: 5px;">Langue *</p>
             <div class="reservation-langue">

@@ -32,6 +32,16 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         reservation_nom: { type: "string", optionnal: false },
         reservation_prenom: { type: "string", optionnal: false },
+        reservation_tel: {
+            type: "string",
+            optionnal: false,
+            min: 10,
+            messages: {
+                stringMin: "Veuillez renseigner un numéro de téléphone valide",
+                stringEmpty: "Veuillez renseigner un numéro de téléphone",
+                required: "Veuillez renseigner un numéro de téléphone",
+            },
+        },
         reservation_email: {
             type: "email",
             optionnal: false,
@@ -112,11 +122,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 for (const [time, status] of Object.entries(slots)) {
                     if (status === "on") {
-
-                    console.log(time)
-                    const [hours, minutes] = time.split("h").map(Number);
-                    const slotDate = new Date(selectedDate);
-                    slotDate.setHours(hours, minutes, 0, 0);
+                        console.log(time);
+                        const [hours, minutes] = time.split("h").map(Number);
+                        const slotDate = new Date(selectedDate);
+                        slotDate.setHours(hours, minutes, 0, 0);
                         if (slotDate.getTime() > currentTime + 4 * 60 * 60 * 1000) {
                             timeSlotSelect.innerHTML += `<option value="${time}">${time}</option>`;
                         }
