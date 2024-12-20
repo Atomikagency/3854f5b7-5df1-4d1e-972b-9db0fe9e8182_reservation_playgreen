@@ -274,6 +274,7 @@ function rp_handle_payment_processing()
 
                     $prix_adulte = floatval(get_post_meta($reservation_data['activite'], '_rp_prix_adulte', true));
                     $prix_enfant = floatval(get_post_meta($reservation_data['activite'], '_rp_prix_enfant', true));
+                    $activite_name = get_the_title($reservation_data['activite']);
 
                     // Calculer le total
                     // apply code promo if exist
@@ -336,6 +337,7 @@ function rp_handle_payment_processing()
     - Nombre d'enfants : {$reservation_data['enfants']}
     - Langue : {$reservation_data['langue']}
     - Total : {$total}
+    - Activité : {$activite_name}
     - Lieux de rendez-vous : {$adresse}
     
     La partie se jouera à l’aide d’un téléphone portable, pensez à avoir de la batterie. Vous recevrez un code permettant de débloquer l’escape game deux heures avant le début de l'activité. 
@@ -360,6 +362,7 @@ function rp_handle_payment_processing()
                     $message_admin = "
     Une nouvelle réservation a été effectuée. Voici les détails :
 
+    - Activité : {$activite_name}
     - Nom : {$reservation_data['prenom']} {$reservation_data['nom']}
     - Email : {$reservation_data['email']}
     - Numéro de téléphone : {$reservation_data['tel']}

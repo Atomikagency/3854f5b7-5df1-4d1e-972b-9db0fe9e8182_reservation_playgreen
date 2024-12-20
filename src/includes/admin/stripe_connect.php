@@ -29,56 +29,46 @@ function rp_render_stripe_connect_page() {
     }
 
     \Stripe\Stripe::setApiKey($stripe_private);
+    $stripe = new \Stripe\StripeClient($stripe_private);
 
-    // Générer un lien Stripe Connect
+
     if (isset($_POST['generate_link'])) {
         try {
 
-            $params = [
-                'refresh_url' => admin_url('admin.php?page=rp-stripe-connect'),
-                'return_url' => admin_url('admin.php?page=rp-stripe-connect'),
-                'type' => 'account_onboarding',
-            ];
+            $account = $stripe->accounts->create([
+                'country' => 'FR',
+                'type' => 'custom',
+                'business_profile' => [
+                    'mcc' => 7991,
+                    'url' => $_POST['company_website']
+                ],
+                'external_account' => $_POST['token-bank_account'],
+                'capabilities' => [
+                    'card_payments' => ['requested' => true],
+                    'transfers' => ['requested' => true],
+                ],
+                'account_token' => $_POST['token-account']
+            ]);
 
-            if(!empty($_POST['stripe_account_id'])){
-                $params['account'] = $_POST['stripe_account_id'];
-            }else{
-                $account = \Stripe\Account::create([]);
-                $params['account'] = $account['id'];
-            }
+            $person = $stripe->accounts->createPerson(
+                $account->id,[
+                    'person_token' => $_POST['token-person'],
+                ]
+            );
 
 
-            $accountLink = \Stripe\AccountLink::create($params);
-
-            echo '<p style="color: green;">Lien généré avec succès :</p>';
-            echo '<a href="' . esc_url($accountLink->url) . '" target="_blank">' . esc_html($accountLink->url) . '</a>';
+            echo '<p style="color: green;">Compte crée</p>';
         } catch (\Stripe\Exception\ApiErrorException $e) {
             echo '<p style="color: red;">Erreur Stripe : ' . esc_html($e->getMessage()) . '</p>';
         }
     }
 
-    ?>
-
-    <div class="wrap">
-        <h1>Stripe Connect - Générer un Lien</h1>
-        <form method="post">
-            <?php wp_nonce_field('rp_generate_stripe_link', 'rp_generate_stripe_link_nonce'); ?>
-            <table class="form-table">
-                <tr>
-                    <th scope="row">
-                        <label for="stripe_account_id">ID du compte Stripe (facultatif)</label>
-                    </th>
-                    <td>
-                        <input type="text" name="stripe_account_id" id="stripe_account_id" placeholder="ex: acct_12345" style="width: 100%;">
-                        <p class="description">Laissez vide pour créer un nouveau compte Stripe Connect.</p>
-                    </td>
-                </tr>
-            </table>
-            <p class="submit">
-                <input type="submit" name="generate_link" class="button-primary" value="Générer le Lien">
-            </p>
-        </form>
-    </div>
-
-    <?php
+    ob_start();
+    $view_file = RESERVATION_PLAYGREEN_PLUGIN_DIR . 'views/stripe_connect.admin.php';
+    if (file_exists($view_file)) {
+        include $view_file;
+    } else {
+        echo '';
+    }
+    echo ob_get_clean();
 }
