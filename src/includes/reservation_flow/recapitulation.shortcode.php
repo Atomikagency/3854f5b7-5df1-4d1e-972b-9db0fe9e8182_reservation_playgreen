@@ -25,9 +25,16 @@ function rp_reservation_recap_shortcode($atts)
                 'activite_duration' => get_post_meta(get_post_meta($reservation_id, '_rp_activite_id', true), '_rp_duree', true),
                 'activite_thumbnail' => get_the_post_thumbnail_url(intval(get_post_meta($reservation_id, '_rp_activite_id', true)))
             ];
+            $reservation_data['is_prix_fixe'] = get_post_meta($reservation_data['activite'], '_rp_is_prix_fixe', true) === 'on' ? 'on' : 'off';
 
             $prix_adulte = floatval(get_post_meta($reservation_data['activite'], '_rp_prix_adulte', true));
             $prix_enfant = floatval(get_post_meta($reservation_data['activite'], '_rp_prix_enfant', true));
+
+            if($reservation_data['is_prix_fixe'] === 'on'){
+                $prix_adulte = floatval(get_post_meta($reservation_data['activite'], '_rp_prix_fixe', true));
+                $reservation_data['adultes'] = 1;
+                $reservation_data['enfants'] = 0;
+            }
 
             // Calculer le total
             // apply code promo if exist

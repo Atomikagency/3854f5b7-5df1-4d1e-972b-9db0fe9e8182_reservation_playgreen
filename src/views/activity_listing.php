@@ -43,9 +43,11 @@ echo '<div class="rp-activity-listing" id="rp-activity-listing">';
 while ($query->have_posts()) {
     $query->the_post();
 
+    $is_prix_fixe = get_post_meta(get_the_ID(), '_rp_is_prix_fixe', true);
     $prix_adulte = get_post_meta(get_the_ID(), '_rp_prix_adulte', true);
     $prix_enfant = get_post_meta(get_the_ID(), '_rp_prix_enfant', true);
-    $prix_min = min(array_filter([$prix_adulte, $prix_enfant]));
+    $prix_fixe = get_post_meta(get_the_ID(), '_rp_prix_fixe', true);
+    $prix_min = $is_prix_fixe ? $prix_fixe : min(array_filter([$prix_adulte, $prix_enfant]));
 
     $lieu = get_post_meta(get_the_ID(), '_rp_lieu', true);
     $age = get_post_meta(get_the_ID(), '_rp_age', true);

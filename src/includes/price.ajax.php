@@ -5,7 +5,7 @@ add_action('wp_ajax_nopriv_calculer_total_paiement', 'rp_calculer_total_paiement
 
 function rp_calculer_total_paiement() {
     // Vérifier les données envoyées
-    if (!isset($_POST['activite_id'], $_POST['nb_adulte'], $_POST['nb_enfant'])) {
+    if (!isset($_POST['activite_id'], $_POST['nb_adulte'], $_POST['nb_enfant'], $_POST['is_prix_fixe'])) {
         wp_send_json_error(['message' => 'Paramètres manquants.'], 400);
     }
 
@@ -14,13 +14,22 @@ function rp_calculer_total_paiement() {
     $nb_enfant = max(0, intval($_POST['nb_enfant']));
     $code_promo = isset($_POST['code_promo']) ? sanitize_text_field($_POST['code_promo']) : null;
     $carte_cadeau = isset($_POST['carte_cadeau']) ? sanitize_text_field($_POST['carte_cadeau']) : null;
+    $is_prix_fixe = isset($_POST['is_prix_fixe']) && sanitize_text_field($_POST['is_prix_fixe']) === 'on' ? true : false;
 
     // Récupérer les prix depuis l'activité
     $prix_adulte = floatval(get_post_meta($activite_id, '_rp_prix_adulte', true));
     $prix_enfant = floatval(get_post_meta($activite_id, '_rp_prix_enfant', true));
+    $prix_fixe = floatval(get_post_meta($activite_id, '_rp_prix_fixe', true));
 
-    if (!$prix_adulte || !$prix_enfant) {
+    if (!$is_prix_fixe && (!$prix_adulte || !$prix_enfant)) {
         wp_send_json_error(['message' => 'Activité ou prix introuvable.'], 404);
+    }
+
+    if ($is_prix_fixe) {
+        $prix_adulte = $prix_fixe;
+        $nb_adulte = 1;
+        $prix_enfant = 0;
+        $nb_enfant = 0;
     }
 
     $total_without_discount = max(0, ($nb_adulte * $prix_adulte) + ($nb_enfant * $prix_enfant));

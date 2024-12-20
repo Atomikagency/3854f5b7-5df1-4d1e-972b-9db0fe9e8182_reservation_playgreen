@@ -146,13 +146,16 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
 
         const data = new FormData(form);
+
         // data to object
         const formData = Object.fromEntries(data.entries());
+        console.log(formData);
 
         let validatorRes = check(formData);
+        console.log(validatorRes);
 
         const hasPlayer = formData.reservation_adultes + formData.reservation_enfants > 0;
-        if (!hasPlayer) {
+        if (!hasPlayer && formData.is_prix_fixe !== "on") {
             if (Array.isArray(validatorRes)) {
                 validatorRes.push({
                     type: "min",
@@ -210,6 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 nb_enfant: $("#reservation-enfants").val(),
                 code_promo: $("#reservation-cp").val(),
                 carte_cadeau: $("#reservation-cc").val(),
+                is_prix_fixe: $("#is_prix_fixe").val(),
             };
 
             console.log(data);
