@@ -321,7 +321,13 @@ function rp_handle_payment_processing()
                     }
 
                     $total = max($total, 0);
-
+                    $is_prix_fixe = get_post_meta($reservation_data['activite'], '_rp_is_prix_fixe', true) === 'on' ? 'on' : 'off';
+                    $info_joueurs = "";
+                    if($is_prix_fixe === 'off'){
+                        $info_joueurs = "
+    - Nombre d'adultes : {$reservation_data['adultes']}
+    - Nombre d'enfants : {$reservation_data['enfants']}";
+                    }
 
                     $adresse = get_post_meta($reservation_data['activite'], '_rp_adresse_rdv', true);
                     $pdf_enigme = get_post_meta($reservation_data['activite'], '_rp_pdf_enigme', true);
@@ -332,9 +338,7 @@ function rp_handle_payment_processing()
     Merci pour votre réservation. Voici les détails de votre réservation :
 
     - Date : {$reservation_data['date']}
-    - Heure : {$reservation_data['heure']}
-    - Nombre d'adultes : {$reservation_data['adultes']}
-    - Nombre d'enfants : {$reservation_data['enfants']}
+    - Heure : {$reservation_data['heure']}{$info_joueurs}
     - Langue : {$reservation_data['langue']}
     - Total : {$total}
     - Activité : {$activite_name}

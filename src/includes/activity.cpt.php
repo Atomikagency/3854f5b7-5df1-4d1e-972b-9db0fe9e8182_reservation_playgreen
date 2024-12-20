@@ -104,6 +104,7 @@ function rp_render_activity_details_meta_box($post) {
         'adresse_rdv'  => get_post_meta($post->ID, '_rp_adresse_rdv', true),
         'pdf_enigme'    => get_post_meta($post->ID, '_rp_pdf_enigme', true),
         'age' => get_post_meta($post->ID, '_rp_age', true),
+        'is_prix_fixe' => get_post_meta($post->ID, '_rp_is_prix_fixe', true),
         ];
 
     $hours = get_post_meta($post->ID, '_rp_hours', true) ?: [];
@@ -153,11 +154,16 @@ function rp_render_activity_details_meta_box($post) {
                 <?php endfor; ?>
             </td>
         </tr>
-        <tr>
-            <th><label for="rp_prix_adulte">Prix Adulte (€)</label></th>
+        <th>Type de prix</th>
+            <td>
+                <label><input type="checkbox" name="rp_is_prix_fixe" id="rp_is_prix_fixe" <?php checked($fields['is_prix_fixe'], 'on'); ?>> Utiliser un prix fixe</label><br>
+            </td>
+        </tr>
+        <tr id="prix_adulte_container">
+            <th><label for="rp_prix_adulte"><?php echo (empty($fields['is_prix_fixe']) || $fields['is_prix_fixe'] == 'off') ? 'Prix Adulte (€)' : 'Prix (€)'; ?></label></th>
             <td><input type="number" name="rp_prix_adulte" id="rp_prix_adulte" value="<?php echo esc_attr($fields['prix_adulte']); ?>" style="width: 100%;"></td>
         </tr>
-        <tr>
+        <tr id="prix_enfant_container" style="display: <?php echo (empty($fields['is_prix_fixe']) || $fields['is_prix_fixe'] == 'off') ? 'table-row' : 'none'; ?>;">
             <th><label for="rp_prix_enfant">Prix Enfant (€)</label></th>
             <td><input type="number" name="rp_prix_enfant" id="rp_prix_enfant" value="<?php echo esc_attr($fields['prix_enfant']); ?>" style="width: 100%;"></td>
         </tr>
@@ -254,6 +260,16 @@ function rp_render_activity_details_meta_box($post) {
             $(document).on('click', '.rp-remove-unavailability', function() {
                 $(this).closest('.rp-unavailability-date').remove();
             });
+
+            $('#rp_is_prix_fixe').on('click', function() {
+                if ($(this).is(':checked')) {
+                    $('#prix_adulte_container label').text('Prix (€)');
+                    $('#prix_enfant_container').hide();
+                } else {
+                    $('#prix_adulte_container label').text('Prix Adulte (€)');
+                    $('#prix_enfant_container').show();
+                }
+            });
         });
     </script>
     <?php
@@ -263,12 +279,16 @@ function rp_render_activity_details_meta_box($post) {
 function rp_save_activity_meta($post_id) {
     $fields = [
         'note', 'lieu', 'nb_personne', 'duree', 'langue_fr', 'langue_en',
-        'photo_1', 'photo_2', 'photo_3', 'photo_4', 'prix_adulte', 'prix_enfant', 'stripe_connect','adresse_rdv','pdf_enigme','age'
+        'photo_1', 'photo_2', 'photo_3', 'photo_4', 'prix_adulte', 'prix_enfant', 'stripe_connect','adresse_rdv','pdf_enigme','age','is_prix_fixe'
     ];
 
     foreach ($fields as $field) {
         if (isset($_POST["rp_$field"])) {
-            update_post_meta($post_id, "_rp_$field", sanitize_text_field($_POST["rp_$field"]));
+            if ($field === 'prix_enfant'){
+                update_post_meta($post_id, "_rp_$field", "0");
+            }else{
+                update_post_meta($post_id, "_rp_$field", sanitize_text_field($_POST["rp_$field"]));
+            }
         }
     }
 

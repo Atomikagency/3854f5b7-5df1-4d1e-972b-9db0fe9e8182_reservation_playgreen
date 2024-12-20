@@ -115,6 +115,7 @@ function rp_reservation_form_shortcode()
         'note' => get_post_meta($activite_id, '_rp_note', true),
         'resumé' => get_the_excerpt($activite_id),
         'activite' => $activite_id,
+        'is_prix_fixe' => get_post_meta($activite_id, '_rp_is_prix_fixe', true) === 'on' ? 'on' : 'off',
     ];
 
     ob_start();

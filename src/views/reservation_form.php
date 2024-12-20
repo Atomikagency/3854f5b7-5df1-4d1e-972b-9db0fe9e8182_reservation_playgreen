@@ -54,11 +54,15 @@
             </div>
 
             <!-- Nombre de personnes -->
-            <label for="reservation-adultes">Nombre d'adultes (<?php echo esc_html($activity_meta['prix_adulte']); ?>€ TTC par adulte)</label>
-            <input type="number" id="reservation-adultes" name="reservation_adultes" min="0" value="0" required>
+            <div style="display: <?php echo ($activity_meta['is_prix_fixe'] == 'on') ? 'none' : 'block'; ?>;">
+                <label for="reservation-adultes">Nombre d'adultes (<?php echo esc_html($activity_meta['prix_adulte']); ?>€ TTC par adulte)</label>
+                <input type="number" id="reservation-adultes" name="reservation_adultes" min="0" value="<?php echo ($activity_meta['is_prix_fixe'] == 'on') ? '1' : '0'; ?>" required>
+            </div>
 
-            <label for="reservation-enfants">Nombre de jeunes (<?php echo esc_html($activity_meta['prix_enfant']); ?>€ TTC par jeune) <sup style="font-size: 12px;">1</sup></label>
-            <input type="number" id="reservation-enfants" name="reservation_enfants" min="0" value="0" required>
+            <div style="display: <?php echo ($activity_meta['is_prix_fixe'] == 'on') ? 'none' : 'block'; ?>;">
+                <label for="reservation-enfants">Nombre de jeunes (<?php echo esc_html($activity_meta['prix_enfant']); ?>€ TTC par jeune) <sup style="font-size: 12px;">1</sup></label>
+                <input type="number" id="reservation-enfants" name="reservation_enfants" min="0" value="0" required>
+            </div>
 
             <label for="reservation-cp">Code promo</label>
             <input type="text" id="reservation-cp" name="reservation_code_promo" >
@@ -100,8 +104,10 @@
         <!-- <p><strong>Note :</strong> <?php echo esc_html($activity_meta['note']); ?>/5</p> -->
         <p><?php echo esc_html($activity_meta['resumé']); ?></p>
         <div class="reservation-form-price">
-            <p class="reservation-form-price-total">Total: <span id="price-with-discount">0.00</span> € TTC</p>
-            <p class="reservation-form-price-without-discount"><span id="price-without-discount">0.00</span> € TTC</p>
+            <p class="reservation-form-price-total">Total: <span id="price-with-discount">
+                <?php echo esc_html($activity_meta['is_prix_fixe'] == 'on' ? number_format(floatval($activity_meta['prix_adulte']), 2, '.', '') : '0.00'); ?>
+            </span> € TTC</p>
+            <!-- <p class="reservation-form-price-without-discount"><span id="price-without-discount">0.00</span> € TTC</p> -->
         </div>
     </div>
 </div>

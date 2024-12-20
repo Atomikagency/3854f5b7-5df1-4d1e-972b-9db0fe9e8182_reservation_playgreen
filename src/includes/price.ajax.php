@@ -18,8 +18,9 @@ function rp_calculer_total_paiement() {
     // Récupérer les prix depuis l'activité
     $prix_adulte = floatval(get_post_meta($activite_id, '_rp_prix_adulte', true));
     $prix_enfant = floatval(get_post_meta($activite_id, '_rp_prix_enfant', true));
+    $is_prix_fixe = get_post_meta($activite_id, '_rp_is_prix_fixe', true) === 'on' ? 'on' : 'off';
 
-    if (!$prix_adulte || !$prix_enfant) {
+    if (!$prix_adulte || ($is_prix_fixe === 'off' && !$prix_enfant)) {
         wp_send_json_error(['message' => 'Activité ou prix introuvable.'], 404);
     }
 
